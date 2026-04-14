@@ -261,7 +261,7 @@ export function AuthDialog(): React.JSX.Element {
         return item.value === authTypeToMainOption(currentAuthType);
       }
 
-      // Priority 3: DOCT_DEFAULT_AUTH_TYPE / QWEN_DEFAULT_AUTH_TYPE env var
+      // Priority 3: DOCT_DEFAULT_AUTH_TYPE/QWEN_DEFAULT_AUTH_TYPE env var
       const defaultAuthType = parseDefaultAuthType(
         process.env['DOCT_DEFAULT_AUTH_TYPE'] ??
           process.env['QWEN_DEFAULT_AUTH_TYPE'],
