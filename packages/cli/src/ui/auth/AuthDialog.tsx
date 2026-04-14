@@ -270,7 +270,9 @@ export function AuthDialog(): React.JSX.Element {
         return item.value === authTypeToMainOption(defaultAuthType);
       }
 
-      // Priority 4: provider-first default to API key flow
+      // Priority 4: provider-first default to API key flow.
+      // This chooses BYO provider/API-key setup as the default onboarding path
+      // instead of the legacy Qwen OAuth-first selection.
       return item.value === 'API_KEY';
     }),
   );
