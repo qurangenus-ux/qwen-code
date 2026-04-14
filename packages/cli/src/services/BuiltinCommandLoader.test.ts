@@ -207,6 +207,13 @@ describe('BuiltinCommandLoader', () => {
     expect(modelCmd?.name).toBe('model');
   });
 
+  it('should include connect command', async () => {
+    const loader = new BuiltinCommandLoader(mockConfig);
+    const commands = await loader.loadCommands(new AbortController().signal);
+    const connectCmd = commands.find((c) => c.name === 'connect');
+    expect(connectCmd).toBeDefined();
+  });
+
   it('should still load all other commands when ideCommand() throws', async () => {
     // Simulate ideCommand() failure (e.g., platform-specific process detection fails)
     const { ideCommand: ideCommandMock } = await import(

@@ -32,7 +32,7 @@ describe('authCommand', () => {
   it('should have the correct name and description', () => {
     expect(authCommand.name).toBe('auth');
     expect(authCommand.description).toBe(
-      'Configure authentication information for login',
+      'Configure authentication and provider connection',
     );
   });
 });

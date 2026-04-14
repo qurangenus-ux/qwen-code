@@ -76,8 +76,8 @@ brew install qwen-code
 ## Quick Start
 
 ```bash
-# Start Qwen Code (interactive)
-qwen
+# Start Doct (interactive)
+doct
 
 # Then, in the session:
 /help
@@ -123,7 +123,7 @@ Qwen Code supports two authentication methods:
 
 #### Qwen OAuth (recommended)
 
-Start `qwen`, then run:
+Start `doct`, then run:
 
 ```bash
 /auth
@@ -188,10 +188,10 @@ Here is a complete example:
 | `security.auth.selectedType` | The protocol to use on startup (`openai`, `anthropic`, `gemini`, `vertex-ai`).                                                        |
 | `model.name`                 | The default model to use when Qwen Code starts.                                                                                       |
 
-**Step 3:** Start Qwen Code — your configuration takes effect automatically:
+**Step 3:** Start Doct — your configuration takes effect automatically:
 
 ```bash
-qwen
+doct
 ```
 
 Use the `/model` command at any time to switch between all configured models.

@@ -97,11 +97,12 @@ export class Storage {
    * Returns the base directory for all runtime output (temp files, debug logs,
    * session data, todos, insights, etc.).
    *
-   * Priority: QWEN_RUNTIME_DIR env var > setRuntimeBaseDir() value > getGlobalQwenDir()
+   * Priority: DOCT_RUNTIME_DIR/QWEN_RUNTIME_DIR env var > setRuntimeBaseDir() value > getGlobalQwenDir()
    * @returns Absolute path to the runtime output base directory
    */
   static getRuntimeBaseDir(): string {
-    const envDir = process.env['QWEN_RUNTIME_DIR'];
+    const envDir =
+      process.env['DOCT_RUNTIME_DIR'] ?? process.env['QWEN_RUNTIME_DIR'];
     if (envDir) {
       return (
         Storage.resolveRuntimeBaseDir(envDir) ?? Storage.getGlobalQwenDir()

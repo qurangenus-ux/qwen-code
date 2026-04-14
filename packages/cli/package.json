@@ -10,6 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
+    "doct": "dist/index.js",
     "qwen": "dist/index.js"
   },
   "exports": {

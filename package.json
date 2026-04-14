@@ -76,6 +76,7 @@
     "normalize-package-data": "^7.0.1"
   },
   "bin": {
+    "doct": "dist/cli.js",
     "qwen": "dist/cli.js"
   },
   "files": [

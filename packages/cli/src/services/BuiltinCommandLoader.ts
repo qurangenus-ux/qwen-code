@@ -16,6 +16,7 @@ import { btwCommand } from '../ui/commands/btwCommand.js';
 import { bugCommand } from '../ui/commands/bugCommand.js';
 import { clearCommand } from '../ui/commands/clearCommand.js';
 import { compressCommand } from '../ui/commands/compressCommand.js';
+import { connectCommand } from '../ui/commands/connectCommand.js';
 import { contextCommand } from '../ui/commands/contextCommand.js';
 import { copyCommand } from '../ui/commands/copyCommand.js';
 import { docsCommand } from '../ui/commands/docsCommand.js';
@@ -90,6 +91,7 @@ export class BuiltinCommandLoader implements ICommandLoader {
       bugCommand,
       clearCommand,
       compressCommand,
+      connectCommand,
       contextCommand,
       copyCommand,
       docsCommand,

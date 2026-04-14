@@ -8,11 +8,11 @@ import type { OpenDialogActionReturn, SlashCommand } from './types.js';
 import { CommandKind } from './types.js';
 import { t } from '../../i18n/index.js';
 
-export const authCommand: SlashCommand = {
-  name: 'auth',
-  altNames: ['login'],
+export const connectCommand: SlashCommand = {
+  name: 'connect',
+  altNames: ['provider'],
   get description() {
-    return t('Configure authentication and provider connection');
+    return t('Connect a provider and model');
   },
   kind: CommandKind.BUILT_IN,
   action: (_context, _args): OpenDialogActionReturn => ({

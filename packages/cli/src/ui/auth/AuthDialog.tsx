@@ -103,11 +103,11 @@ export function AuthDialog(): React.JSX.Element {
   // Main authentication entries (flat three-option layout)
   const mainItems = [
     {
-      key: AuthType.QWEN_OAUTH,
-      title: t('Qwen OAuth'),
-      label: t('Qwen OAuth'),
-      description: t('Free \u00B7 100 requests/day \u00B7 Ending 2026-04-15'),
-      value: AuthType.QWEN_OAUTH as MainOption,
+      key: 'API_KEY',
+      title: t('API Key'),
+      label: t('API Key'),
+      description: t('Bring your own API key'),
+      value: 'API_KEY' as MainOption,
     },
     {
       key: 'CODING_PLAN',
@@ -119,11 +119,11 @@ export function AuthDialog(): React.JSX.Element {
       value: 'CODING_PLAN' as MainOption,
     },
     {
-      key: 'API_KEY',
-      title: t('API Key'),
-      label: t('API Key'),
-      description: t('Bring your own API key'),
-      value: 'API_KEY' as MainOption,
+      key: AuthType.QWEN_OAUTH,
+      title: t('Qwen OAuth'),
+      label: t('Qwen OAuth'),
+      description: t('Free \u00B7 100 requests/day \u00B7 Ending 2026-04-15'),
+      value: AuthType.QWEN_OAUTH as MainOption,
     },
   ];
 
@@ -261,16 +261,17 @@ export function AuthDialog(): React.JSX.Element {
         return item.value === authTypeToMainOption(currentAuthType);
       }
 
-      // Priority 3: QWEN_DEFAULT_AUTH_TYPE env var
+      // Priority 3: DOCT_DEFAULT_AUTH_TYPE / QWEN_DEFAULT_AUTH_TYPE env var
       const defaultAuthType = parseDefaultAuthType(
-        process.env['QWEN_DEFAULT_AUTH_TYPE'],
+        process.env['DOCT_DEFAULT_AUTH_TYPE'] ??
+          process.env['QWEN_DEFAULT_AUTH_TYPE'],
       );
       if (defaultAuthType) {
         return item.value === authTypeToMainOption(defaultAuthType);
       }
 
-      // Priority 4: default to QWEN_OAUTH
-      return item.value === AuthType.QWEN_OAUTH;
+      // Priority 4: provider-first default to API key flow
+      return item.value === 'API_KEY';
     }),
   );
 
