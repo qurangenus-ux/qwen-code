@@ -10,7 +10,6 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "doct": "dist/index.js",
     "doct": "dist/index.js"
   },
   "exports": {

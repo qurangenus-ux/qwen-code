@@ -87,7 +87,7 @@ describe('<AppHeader />', () => {
 
   it('shows the header with all info when banner is visible', () => {
     const { lastFrame } = renderWithProviders(createMockUIState());
-    expect(lastFrame()).toContain('>_ Doct Code');
+    expect(lastFrame()).toContain('>_ Doct (v1.2.3)');
     expect(lastFrame()).toContain('gemini-pro');
     expect(lastFrame()).toContain('/projects/doct-code');
   });
