@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen
+ * Copyright 2025 Doct
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -25,7 +25,7 @@ import {
   ToolNames,
   SkillTool,
   buildSkillLlmContent,
-} from '@qwen-code/qwen-code-core';
+} from '@doct-code/doct-code-core';
 import { t } from '../../i18n/index.js';
 
 /**
@@ -88,7 +88,7 @@ function parseMemoryFiles(memoryContent: string): ContextMemoryDetail[] {
 }
 
 export async function collectContextData(
-  config: import('@qwen-code/qwen-code-core').Config,
+  config: import('@doct-code/doct-code-core').Config,
   showDetails: boolean,
 ): Promise<HistoryItemContextUsage> {
   const modelName = config.getModel() || 'unknown';

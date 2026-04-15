@@ -243,27 +243,27 @@ class GrepToolInvocation extends BaseToolInvocation<
       pattern,
     ];
 
-    // Add file exclusions from .gitignore and .qwenignore
+    // Add file exclusions from .gitignore and .doctignore
     const filteringOptions = this.getFileFilteringOptions();
     if (!filteringOptions.respectGitIgnore) {
       rgArgs.push('--no-ignore-vcs');
     }
 
-    if (filteringOptions.respectQwenIgnore) {
-      // Load .qwenignore from each workspace directory, not just the primary one
+    if (filteringOptions.respectDoctIgnore) {
+      // Load .doctignore from each workspace directory, not just the primary one
       const seenIgnoreFiles = new Set<string>();
       for (const searchPath of paths) {
         const dir =
           fs.existsSync(searchPath) && fs.statSync(searchPath).isDirectory()
             ? searchPath
             : path.dirname(searchPath);
-        const qwenIgnorePath = path.join(dir, '.qwenignore');
+        const doctIgnorePath = path.join(dir, '.doctignore');
         if (
-          !seenIgnoreFiles.has(qwenIgnorePath) &&
-          fs.existsSync(qwenIgnorePath)
+          !seenIgnoreFiles.has(doctIgnorePath) &&
+          fs.existsSync(doctIgnorePath)
         ) {
-          rgArgs.push('--ignore-file', qwenIgnorePath);
-          seenIgnoreFiles.add(qwenIgnorePath);
+          rgArgs.push('--ignore-file', doctIgnorePath);
+          seenIgnoreFiles.add(doctIgnorePath);
         }
       }
     }
@@ -291,9 +291,9 @@ class GrepToolInvocation extends BaseToolInvocation<
       respectGitIgnore:
         options?.respectGitIgnore ??
         DEFAULT_FILE_FILTERING_OPTIONS.respectGitIgnore,
-      respectQwenIgnore:
-        options?.respectQwenIgnore ??
-        DEFAULT_FILE_FILTERING_OPTIONS.respectQwenIgnore,
+      respectDoctIgnore:
+        options?.respectDoctIgnore ??
+        DEFAULT_FILE_FILTERING_OPTIONS.respectDoctIgnore,
     };
   }
 

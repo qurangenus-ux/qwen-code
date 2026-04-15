@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -10,15 +10,15 @@ import {
   AuthType,
   clearCachedCredentialFile,
   createDebugLogger,
-  QwenOAuth2Event,
-  qwenOAuth2Events,
+  DoctOAuth2Event,
+  doctOAuth2Events,
   MCPServerConfig,
   SessionService,
   tokenLimit,
   type Config,
   type ConversationRecord,
   type DeviceAuthorizationData,
-} from '@qwen-code/qwen-code-core';
+} from '@doct-code/doct-code-core';
 import {
   AgentSideConnection,
   RequestError,
@@ -85,7 +85,7 @@ export async function runAcpAgent(
 
   const stream = ndJsonStream(stdout, stdin);
   const connection = new AgentSideConnection(
-    (conn) => new QwenAgent(config, settings, argv, conn),
+    (conn) => new DoctAgent(config, settings, argv, conn),
     stream,
   );
 
@@ -135,7 +135,7 @@ function toStdioServer(server: McpServer): McpServerStdio | undefined {
   return undefined;
 }
 
-class QwenAgent implements Agent {
+class DoctAgent implements Agent {
   private sessions: Map<string, Session> = new Map();
   private clientCapabilities: ClientCapabilities | undefined;
 
@@ -154,8 +154,8 @@ class QwenAgent implements Agent {
     return {
       protocolVersion: PROTOCOL_VERSION,
       agentInfo: {
-        name: 'qwen-code',
-        title: 'Qwen Code',
+        name: 'doct-code',
+        title: 'Doct Code',
         version,
       },
       authMethods,
@@ -185,8 +185,8 @@ class QwenAgent implements Agent {
       });
     };
 
-    if (method === AuthType.QWEN_OAUTH) {
-      qwenOAuth2Events.once(QwenOAuth2Event.AuthUri, authUriHandler);
+    if (method === AuthType.DOCT_OAUTH) {
+      doctOAuth2Events.once(DoctOAuth2Event.AuthUri, authUriHandler);
     }
 
     await clearCachedCredentialFile();
@@ -198,8 +198,8 @@ class QwenAgent implements Agent {
         method,
       );
     } finally {
-      if (method === AuthType.QWEN_OAUTH) {
-        qwenOAuth2Events.off(QwenOAuth2Event.AuthUri, authUriHandler);
+      if (method === AuthType.DOCT_OAUTH) {
+        doctOAuth2Events.off(DoctOAuth2Event.AuthUri, authUriHandler);
       }
     }
   }
@@ -429,7 +429,7 @@ class QwenAgent implements Agent {
     if (!selectedType) {
       throw RequestError.authRequired(
         { authMethods: this.pickAuthMethodsForAuthRequired() },
-        'Use Qwen Code CLI to authenticate first.',
+        'Use Doct Code CLI to authenticate first.',
       );
     }
 
@@ -453,13 +453,13 @@ class QwenAgent implements Agent {
     const authMethods = buildAuthMethods();
     const errorMessage = this.extractErrorMessage(error);
     if (
-      errorMessage?.includes('qwen-oauth') ||
-      errorMessage?.includes('Qwen OAuth')
+      errorMessage?.includes('doct-oauth') ||
+      errorMessage?.includes('Doct OAuth')
     ) {
-      const qwenOAuthMethods = authMethods.filter(
-        (m) => m.id === AuthType.QWEN_OAUTH,
+      const doctOAuthMethods = authMethods.filter(
+        (m) => m.id === AuthType.DOCT_OAUTH,
       );
-      return qwenOAuthMethods.length ? qwenOAuthMethods : authMethods;
+      return doctOAuthMethods.length ? doctOAuthMethods : authMethods;
     }
 
     if (selectedType) {

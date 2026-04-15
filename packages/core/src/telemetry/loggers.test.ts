@@ -58,7 +58,7 @@ import {
   logApiError,
 } from './loggers.js';
 import * as metrics from './metrics.js';
-import { QwenLogger } from './qwen-logger/qwen-logger.js';
+import { DoctLogger } from './doct-logger/doct-logger.js';
 import * as sdk from './sdk.js';
 import { ToolCallDecision } from './tool-call-decision.js';
 import {
@@ -111,10 +111,10 @@ describe('loggers', () => {
   describe('logChatCompression', () => {
     beforeEach(() => {
       vi.spyOn(metrics, 'recordChatCompressionMetrics');
-      vi.spyOn(QwenLogger.prototype, 'logChatCompressionEvent');
+      vi.spyOn(DoctLogger.prototype, 'logChatCompressionEvent');
     });
 
-    it('logs the chat compression event to QwenLogger', () => {
+    it('logs the chat compression event to DoctLogger', () => {
       const mockConfig = makeFakeConfig({ sessionId: 'test-session-id' });
 
       const event = makeChatCompressionEvent({
@@ -124,7 +124,7 @@ describe('loggers', () => {
 
       logChatCompression(mockConfig, event);
 
-      expect(QwenLogger.prototype.logChatCompressionEvent).toHaveBeenCalledWith(
+      expect(DoctLogger.prototype.logChatCompressionEvent).toHaveBeenCalledWith(
         event,
       );
     });
@@ -535,7 +535,7 @@ describe('loggers', () => {
     } as unknown as Config;
 
     beforeEach(() => {
-      vi.spyOn(QwenLogger.prototype, 'logRipgrepFallbackEvent');
+      vi.spyOn(DoctLogger.prototype, 'logRipgrepFallbackEvent');
     });
 
     it('should log ripgrep fallback event', () => {
@@ -547,7 +547,7 @@ describe('loggers', () => {
 
       logRipgrepFallback(mockConfig, event);
 
-      expect(QwenLogger.prototype.logRipgrepFallbackEvent).toHaveBeenCalled();
+      expect(DoctLogger.prototype.logRipgrepFallbackEvent).toHaveBeenCalled();
 
       const emittedEvent = mockLogger.emit.mock.calls[0][0];
       expect(emittedEvent.body).toBe('Switching to grep as fallback.');
@@ -565,7 +565,7 @@ describe('loggers', () => {
 
       logRipgrepFallback(mockConfig, event);
 
-      expect(QwenLogger.prototype.logRipgrepFallbackEvent).toHaveBeenCalled();
+      expect(DoctLogger.prototype.logRipgrepFallbackEvent).toHaveBeenCalled();
 
       const emittedEvent = mockLogger.emit.mock.calls[0][0];
       expect(emittedEvent.body).toBe('Switching to grep as fallback.');
@@ -1151,7 +1151,7 @@ describe('loggers', () => {
 
   describe('logMalformedJsonResponse', () => {
     beforeEach(() => {
-      vi.spyOn(QwenLogger.prototype, 'logMalformedJsonResponseEvent');
+      vi.spyOn(DoctLogger.prototype, 'logMalformedJsonResponseEvent');
     });
 
     it('logs the event to Clearcut and OTEL', () => {
@@ -1161,7 +1161,7 @@ describe('loggers', () => {
       logMalformedJsonResponse(mockConfig, event);
 
       expect(
-        QwenLogger.prototype.logMalformedJsonResponseEvent,
+        DoctLogger.prototype.logMalformedJsonResponseEvent,
       ).toHaveBeenCalledWith(event);
 
       expect(mockLogger.emit).toHaveBeenCalledWith({
@@ -1277,7 +1277,7 @@ describe('loggers', () => {
     } as unknown as Config;
 
     beforeEach(() => {
-      vi.spyOn(QwenLogger.prototype, 'logExtensionInstallEvent');
+      vi.spyOn(DoctLogger.prototype, 'logExtensionInstallEvent');
     });
 
     afterEach(() => {
@@ -1295,7 +1295,7 @@ describe('loggers', () => {
       logExtensionInstallEvent(mockConfig, event);
 
       expect(
-        QwenLogger.prototype.logExtensionInstallEvent,
+        DoctLogger.prototype.logExtensionInstallEvent,
       ).toHaveBeenCalledWith(event);
 
       expect(mockLogger.emit).toHaveBeenCalledWith({
@@ -1320,7 +1320,7 @@ describe('loggers', () => {
     } as unknown as Config;
 
     beforeEach(() => {
-      vi.spyOn(QwenLogger.prototype, 'logExtensionUninstallEvent');
+      vi.spyOn(DoctLogger.prototype, 'logExtensionUninstallEvent');
     });
 
     afterEach(() => {
@@ -1333,7 +1333,7 @@ describe('loggers', () => {
       logExtensionUninstall(mockConfig, event);
 
       expect(
-        QwenLogger.prototype.logExtensionUninstallEvent,
+        DoctLogger.prototype.logExtensionUninstallEvent,
       ).toHaveBeenCalledWith(event);
 
       expect(mockLogger.emit).toHaveBeenCalledWith({
@@ -1356,7 +1356,7 @@ describe('loggers', () => {
     } as unknown as Config;
 
     beforeEach(() => {
-      vi.spyOn(QwenLogger.prototype, 'logExtensionEnableEvent');
+      vi.spyOn(DoctLogger.prototype, 'logExtensionEnableEvent');
     });
 
     afterEach(() => {
@@ -1368,7 +1368,7 @@ describe('loggers', () => {
 
       logExtensionEnable(mockConfig, event);
 
-      expect(QwenLogger.prototype.logExtensionEnableEvent).toHaveBeenCalledWith(
+      expect(DoctLogger.prototype.logExtensionEnableEvent).toHaveBeenCalledWith(
         event,
       );
 
@@ -1392,7 +1392,7 @@ describe('loggers', () => {
     } as unknown as Config;
 
     beforeEach(() => {
-      vi.spyOn(QwenLogger.prototype, 'logExtensionDisableEvent');
+      vi.spyOn(DoctLogger.prototype, 'logExtensionDisableEvent');
     });
 
     afterEach(() => {
@@ -1405,7 +1405,7 @@ describe('loggers', () => {
       logExtensionDisable(mockConfig, event);
 
       expect(
-        QwenLogger.prototype.logExtensionDisableEvent,
+        DoctLogger.prototype.logExtensionDisableEvent,
       ).toHaveBeenCalledWith(event);
 
       expect(mockLogger.emit).toHaveBeenCalledWith({
@@ -1430,18 +1430,18 @@ describe('loggers', () => {
       getTelemetryLogPromptsEnabled: () => true,
     } as unknown as Config;
 
-    const mockQwenLogger = {
+    const mockDoctLogger = {
       logHookCallEvent: vi.fn(),
     };
 
     beforeEach(() => {
-      vi.spyOn(QwenLogger, 'getInstance').mockReturnValue(
-        mockQwenLogger as unknown as QwenLogger,
+      vi.spyOn(DoctLogger, 'getInstance').mockReturnValue(
+        mockDoctLogger as unknown as DoctLogger,
       );
-      mockQwenLogger.logHookCallEvent.mockClear();
+      mockDoctLogger.logHookCallEvent.mockClear();
     });
 
-    it('should log a successful hook call to QwenLogger', () => {
+    it('should log a successful hook call to DoctLogger', () => {
       const event = new HookCallEvent(
         'UserPromptSubmit',
         'command',
@@ -1458,8 +1458,8 @@ describe('loggers', () => {
 
       logHookCall(mockConfig, event);
 
-      // Should call QwenLogger
-      expect(mockQwenLogger.logHookCallEvent).toHaveBeenCalledWith(event);
+      // Should call DoctLogger
+      expect(mockDoctLogger.logHookCallEvent).toHaveBeenCalledWith(event);
     });
 
     it('should log a failed hook call with error', () => {
@@ -1479,12 +1479,12 @@ describe('loggers', () => {
 
       logHookCall(mockConfig, event);
 
-      // Should call QwenLogger
-      expect(mockQwenLogger.logHookCallEvent).toHaveBeenCalledWith(event);
+      // Should call DoctLogger
+      expect(mockDoctLogger.logHookCallEvent).toHaveBeenCalledWith(event);
     });
 
-    it('should handle when QwenLogger is not available', () => {
-      vi.spyOn(QwenLogger, 'getInstance').mockReturnValue(undefined);
+    it('should handle when DoctLogger is not available', () => {
+      vi.spyOn(DoctLogger, 'getInstance').mockReturnValue(undefined);
 
       const event = new HookCallEvent(
         'UserPromptSubmit',
@@ -1495,7 +1495,7 @@ describe('loggers', () => {
         true,
       );
 
-      // Should not throw when QwenLogger is not available
+      // Should not throw when DoctLogger is not available
       expect(() => logHookCall(mockConfig, event)).not.toThrow();
     });
 
@@ -1516,7 +1516,7 @@ describe('loggers', () => {
 
       logHookCall(mockConfig, event);
 
-      expect(mockQwenLogger.logHookCallEvent).toHaveBeenCalledWith(event);
+      expect(mockDoctLogger.logHookCallEvent).toHaveBeenCalledWith(event);
     });
 
     it('should log hook call with minimal fields', () => {
@@ -1531,7 +1531,7 @@ describe('loggers', () => {
 
       logHookCall(mockConfig, event);
 
-      expect(mockQwenLogger.logHookCallEvent).toHaveBeenCalledWith(event);
+      expect(mockDoctLogger.logHookCallEvent).toHaveBeenCalledWith(event);
     });
 
     it('should log hook call with exit code', () => {
@@ -1551,7 +1551,7 @@ describe('loggers', () => {
 
       logHookCall(mockConfig, event);
 
-      expect(mockQwenLogger.logHookCallEvent).toHaveBeenCalledWith(event);
+      expect(mockDoctLogger.logHookCallEvent).toHaveBeenCalledWith(event);
     });
 
     it('should log hook call with zero exit code on success', () => {
@@ -1571,7 +1571,7 @@ describe('loggers', () => {
 
       logHookCall(mockConfig, event);
 
-      expect(mockQwenLogger.logHookCallEvent).toHaveBeenCalledWith(event);
+      expect(mockDoctLogger.logHookCallEvent).toHaveBeenCalledWith(event);
     });
 
     it('should log hook call with non-zero exit code on failure', () => {
@@ -1591,7 +1591,7 @@ describe('loggers', () => {
 
       logHookCall(mockConfig, event);
 
-      expect(mockQwenLogger.logHookCallEvent).toHaveBeenCalledWith(event);
+      expect(mockDoctLogger.logHookCallEvent).toHaveBeenCalledWith(event);
     });
 
     it('should log all hook event types', () => {
@@ -1611,7 +1611,7 @@ describe('loggers', () => {
       ];
 
       for (const eventType of eventTypes) {
-        mockQwenLogger.logHookCallEvent.mockClear();
+        mockDoctLogger.logHookCallEvent.mockClear();
 
         const event = new HookCallEvent(
           eventType,
@@ -1624,11 +1624,11 @@ describe('loggers', () => {
 
         logHookCall(mockConfig, event);
 
-        expect(mockQwenLogger.logHookCallEvent).toHaveBeenCalledWith(event);
+        expect(mockDoctLogger.logHookCallEvent).toHaveBeenCalledWith(event);
       }
     });
 
-    it('should pass the exact event object to QwenLogger', () => {
+    it('should pass the exact event object to DoctLogger', () => {
       const event = new HookCallEvent(
         'PreToolUse',
         'command',
@@ -1641,8 +1641,8 @@ describe('loggers', () => {
       logHookCall(mockConfig, event);
 
       // Verify the exact event object is passed
-      expect(mockQwenLogger.logHookCallEvent).toHaveBeenCalledTimes(1);
-      const passedEvent = mockQwenLogger.logHookCallEvent.mock.calls[0][0];
+      expect(mockDoctLogger.logHookCallEvent).toHaveBeenCalledTimes(1);
+      const passedEvent = mockDoctLogger.logHookCallEvent.mock.calls[0][0];
       expect(passedEvent).toBe(event);
     });
   });

@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { AuthType } from '@qwen-code/qwen-code-core';
+import { AuthType } from '@doct-code/doct-code-core';
 import { vi } from 'vitest';
 import { validateAuthMethod } from './auth.js';
 import * as settings from './settings.js';
@@ -107,8 +107,8 @@ describe('validateAuthMethod', () => {
     expect(result).toContain('GEMINI_API_KEY_ALTERED');
   });
 
-  it('should return null for QWEN_OAUTH', () => {
-    expect(validateAuthMethod(AuthType.QWEN_OAUTH)).toBeNull();
+  it('should return null for DOCT_OAUTH', () => {
+    expect(validateAuthMethod(AuthType.DOCT_OAUTH)).toBeNull();
   });
 
   it('should return an error message for an invalid auth method', () => {
@@ -188,7 +188,7 @@ describe('validateAuthMethod', () => {
         getModel: vi.fn().mockReturnValue('cli-model'),
         getGenerationConfig: vi.fn().mockReturnValue({}),
       }),
-    } as unknown as import('@qwen-code/qwen-code-core').Config;
+    } as unknown as import('@doct-code/doct-code-core').Config;
 
     // Set the env key for the CLI model, not the settings model
     process.env['CLI_API_KEY'] = 'cli-key';
@@ -222,7 +222,7 @@ describe('validateAuthMethod', () => {
         getModel: vi.fn().mockReturnValue('cli-model'),
         getGenerationConfig: vi.fn().mockReturnValue({}),
       }),
-    } as unknown as import('@qwen-code/qwen-code-core').Config;
+    } as unknown as import('@doct-code/doct-code-core').Config;
 
     // Don't set CLI_API_KEY - validation should fail
     const result = validateAuthMethod(AuthType.USE_OPENAI, mockConfig);
@@ -246,7 +246,7 @@ describe('validateAuthMethod', () => {
           .fn()
           .mockReturnValue({ apiKey: 'cli-provided-key' }),
       }),
-    } as unknown as import('@qwen-code/qwen-code-core').Config;
+    } as unknown as import('@doct-code/doct-code-core').Config;
 
     const result = validateAuthMethod(AuthType.USE_OPENAI, mockConfig);
     expect(result).toBeNull();
@@ -274,7 +274,7 @@ describe('validateAuthMethod', () => {
           .fn()
           .mockReturnValue({ apiKey: 'cli-provided-key' }),
       }),
-    } as unknown as import('@qwen-code/qwen-code-core').Config;
+    } as unknown as import('@doct-code/doct-code-core').Config;
 
     const result = validateAuthMethod(AuthType.USE_OPENAI, mockConfig);
     expect(result).toBeNull();

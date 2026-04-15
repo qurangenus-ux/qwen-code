@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -14,13 +14,13 @@ import {
   type ResolvedModelConfig,
   type AvailableModel,
 } from './types.js';
-import { DEFAULT_QWEN_MODEL } from '../config/models.js';
-import { QWEN_OAUTH_MODELS } from './constants.js';
+import { DEFAULT_DOCT_MODEL } from '../config/models.js';
+import { DOCT_OAUTH_MODELS } from './constants.js';
 import { createDebugLogger } from '../utils/debugLogger.js';
 
 const debugLogger = createDebugLogger('MODEL_REGISTRY');
 
-export { QWEN_OAUTH_MODELS } from './constants.js';
+export { DOCT_OAUTH_MODELS } from './constants.js';
 
 /**
  * Validates if a string key is a valid AuthType enum value.
@@ -46,8 +46,8 @@ export class ModelRegistry {
 
   private getDefaultBaseUrl(authType: AuthType): string {
     switch (authType) {
-      case AuthType.QWEN_OAUTH:
-        return 'DYNAMIC_QWEN_OAUTH_BASE_URL';
+      case AuthType.DOCT_OAUTH:
+        return 'DYNAMIC_DOCT_OAUTH_BASE_URL';
       case AuthType.USE_OPENAI:
         return DEFAULT_OPENAI_BASE_URL;
       default:
@@ -58,8 +58,8 @@ export class ModelRegistry {
   constructor(modelProvidersConfig?: ModelProvidersConfig) {
     this.modelsByAuthType = new Map();
 
-    // Always register qwen-oauth models (hard-coded, cannot be overridden)
-    this.registerAuthTypeModels(AuthType.QWEN_OAUTH, QWEN_OAUTH_MODELS);
+    // Always register doct-oauth models (hard-coded, cannot be overridden)
+    this.registerAuthTypeModels(AuthType.DOCT_OAUTH, DOCT_OAUTH_MODELS);
 
     // Register user-configured models for other authTypes
     if (modelProvidersConfig) {
@@ -73,8 +73,8 @@ export class ModelRegistry {
           continue;
         }
 
-        // Skip qwen-oauth as it uses hard-coded models
-        if (authType === AuthType.QWEN_OAUTH) {
+        // Skip doct-oauth as it uses hard-coded models
+        if (authType === AuthType.DOCT_OAUTH) {
           continue;
         }
 
@@ -153,14 +153,14 @@ export class ModelRegistry {
 
   /**
    * Get default model for an authType.
-   * For qwen-oauth, returns the coder model.
+   * For doct-oauth, returns the coder model.
    * For others, returns the first configured model.
    */
   getDefaultModelForAuthType(
     authType: AuthType,
   ): ResolvedModelConfig | undefined {
-    if (authType === AuthType.QWEN_OAUTH) {
-      return this.getModel(authType, DEFAULT_QWEN_MODEL);
+    if (authType === AuthType.DOCT_OAUTH) {
+      return this.getModel(authType, DEFAULT_DOCT_MODEL);
     }
     const models = this.modelsByAuthType.get(authType);
     if (!models || models.size === 0) return undefined;
@@ -200,12 +200,12 @@ export class ModelRegistry {
   /**
    * Reload models from updated configuration.
    * Clears existing user-configured models and re-registers from new config.
-   * Preserves hard-coded qwen-oauth models.
+   * Preserves hard-coded doct-oauth models.
    */
   reloadModels(modelProvidersConfig?: ModelProvidersConfig): void {
-    // Clear existing user-configured models (preserve qwen-oauth)
+    // Clear existing user-configured models (preserve doct-oauth)
     for (const authType of this.modelsByAuthType.keys()) {
-      if (authType !== AuthType.QWEN_OAUTH) {
+      if (authType !== AuthType.DOCT_OAUTH) {
         this.modelsByAuthType.delete(authType);
       }
     }
@@ -222,8 +222,8 @@ export class ModelRegistry {
           continue;
         }
 
-        // Skip qwen-oauth as it uses hard-coded models
-        if (authType === AuthType.QWEN_OAUTH) {
+        // Skip doct-oauth as it uses hard-coded models
+        if (authType === AuthType.DOCT_OAUTH) {
           continue;
         }
 

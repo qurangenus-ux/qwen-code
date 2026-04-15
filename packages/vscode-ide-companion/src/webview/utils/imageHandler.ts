@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -9,7 +9,7 @@ import * as fsp from 'fs/promises';
 import * as path from 'path';
 import { randomUUID } from 'node:crypto';
 import type { ContentBlock } from '@agentclientprotocol/sdk';
-import { Storage } from '@qwen-code/qwen-code-core';
+import { Storage } from '@doct-code/doct-code-core';
 import type {
   ImageAttachment,
   SavedImageAttachment,

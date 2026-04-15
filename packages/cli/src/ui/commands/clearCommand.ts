@@ -14,7 +14,7 @@ import {
   ToolNames,
   SkillTool,
   type PermissionMode,
-} from '@qwen-code/qwen-code-core';
+} from '@doct-code/doct-code-core';
 
 export const clearCommand: SlashCommand = {
   name: 'clear',

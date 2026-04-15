@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -47,7 +47,7 @@ function renderHookHarness(overrides?: {
   const handlers = {
     sessionManagement: {
       currentSessionId: 'conversation-1',
-      setQwenSessions: vi.fn(),
+      setDoctSessions: vi.fn(),
       setCurrentSessionId: vi.fn(),
       setCurrentSessionTitle: vi.fn(),
       setShowSessionSelector: vi.fn(),
@@ -169,7 +169,7 @@ describe('useWebViewMessages', () => {
     ).toHaveBeenCalledWith('Past Conversations');
     expect(mockPostMessage).toHaveBeenCalledWith({
       type: 'updatePanelTitle',
-      data: { title: 'Qwen Code' },
+      data: { title: 'Doct Code' },
     });
   });
 

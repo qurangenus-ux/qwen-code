@@ -61,7 +61,7 @@ The effective `max_tokens` is resolved in the following priority order:
 | Priority    | Source                                               | Value (known model)          | Value (unknown model) | Escalation behavior            |
 | ----------- | ---------------------------------------------------- | ---------------------------- | --------------------- | ------------------------------ |
 | 1 (highest) | User config (`samplingParams.max_tokens`)            | `min(userValue, modelLimit)` | `userValue`           | No escalation                  |
-| 2           | Environment variable (`QWEN_CODE_MAX_OUTPUT_TOKENS`) | `min(envValue, modelLimit)`  | `envValue`            | No escalation                  |
+| 2           | Environment variable (`DOCT_CODE_MAX_OUTPUT_TOKENS`) | `min(envValue, modelLimit)`  | `envValue`            | No escalation                  |
 | 3 (lowest)  | Capped default                                       | `min(modelLimit, 8K)`        | `min(32K, 8K)` = 8K   | Escalates to 64K on truncation |
 
 A "known model" is one that has an explicit entry in `OUTPUT_PATTERNS` (checked via `hasExplicitOutputLimit()`). For known models, the effective value is always capped at the model's declared output limit to avoid API errors. Unknown models (custom deployments, self-hosted endpoints) pass the user's value through directly, since the backend may support larger limits.
@@ -122,7 +122,7 @@ Defined in `tokenLimits.ts`:
 ### Why 64K escalated limit?
 
 - Covers the vast majority of long outputs that were truncated at 8K
-- Matches the output limit of many modern models (Claude Sonnet, Gemini 3.x, Qwen3.x)
+- Matches the output limit of many modern models (Claude Sonnet, Gemini 3.x, Doct3.x)
 - Higher values (e.g., 128K) would negate slot optimization benefits for the <1% of requests that escalate
 
 ### Why not progressive escalation (8K → 16K → 32K → 64K)?

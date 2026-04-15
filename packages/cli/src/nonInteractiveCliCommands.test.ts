@@ -1,12 +1,12 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { handleSlashCommand } from './nonInteractiveCliCommands.js';
-import type { Config } from '@qwen-code/qwen-code-core';
+import type { Config } from '@doct-code/doct-code-core';
 import type { LoadedSettings } from './config/settings.js';
 import { CommandKind } from './ui/commands/types.js';
 

@@ -1,12 +1,12 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import { useCallback, useEffect, useState } from 'react';
-import type { Config, ModelProvidersConfig } from '@qwen-code/qwen-code-core';
-import { AuthType } from '@qwen-code/qwen-code-core';
+import type { Config, ModelProvidersConfig } from '@doct-code/doct-code-core';
+import { AuthType } from '@doct-code/doct-code-core';
 import type { LoadedSettings } from '../../config/settings.js';
 import { getPersistScopeForModelSelection } from '../../config/modelProvidersScope.js';
 import {

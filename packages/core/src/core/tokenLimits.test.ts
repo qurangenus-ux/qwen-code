@@ -18,7 +18,7 @@ describe('normalize', () => {
   });
 
   it('should handle pipe and colon separators', () => {
-    expect(normalize('qwen|qwen2.5:qwen2.5-1m')).toBe('qwen2.5-1m');
+    expect(normalize('doct|doct2.5:doct2.5-1m')).toBe('doct2.5-1m');
   });
 
   it('should collapse whitespace to a single hyphen', () => {
@@ -36,11 +36,11 @@ describe('normalize', () => {
   });
 
   it('should remove quantization and numeric suffixes', () => {
-    expect(normalize('qwen3-coder-7b-4bit')).toBe('qwen3-coder-7b');
+    expect(normalize('doct3-coder-7b-4bit')).toBe('doct3-coder-7b');
     expect(normalize('llama-4-scout-int8')).toBe('llama-4-scout');
     expect(normalize('mistral-large-2-bf16')).toBe('mistral-large-2');
     expect(normalize('deepseek-v3.1-q4')).toBe('deepseek-v3.1');
-    expect(normalize('qwen2.5-quantized')).toBe('qwen2.5');
+    expect(normalize('doct2.5-quantized')).toBe('doct2.5');
   });
 
   it('should handle a combination of normalization rules', () => {
@@ -59,10 +59,10 @@ describe('normalize', () => {
     expect(normalize('gemini-2.0-flash-preview')).toBe('gemini-2.0-flash');
   });
 
-  it('should not remove "-latest" from specific Qwen model names', () => {
-    expect(normalize('qwen-plus-latest')).toBe('qwen-plus-latest');
-    expect(normalize('qwen-flash-latest')).toBe('qwen-flash-latest');
-    expect(normalize('qwen-vl-max-latest')).toBe('qwen-vl-max-latest');
+  it('should not remove "-latest" from specific Doct model names', () => {
+    expect(normalize('doct-plus-latest')).toBe('doct-plus-latest');
+    expect(normalize('doct-flash-latest')).toBe('doct-flash-latest');
+    expect(normalize('doct-vl-max-latest')).toBe('doct-vl-max-latest');
   });
 
   it('should preserve date suffixes for Kimi K2 models', () => {
@@ -141,33 +141,33 @@ describe('tokenLimit', () => {
     });
   });
 
-  describe('Alibaba Qwen', () => {
-    it('should return 1M for commercial Qwen3 models', () => {
-      expect(tokenLimit('qwen3-coder-plus')).toBe(1000000);
-      expect(tokenLimit('qwen3-coder-plus-20250601')).toBe(1000000);
-      expect(tokenLimit('qwen3-coder-flash')).toBe(1000000);
-      expect(tokenLimit('qwen3.5-plus')).toBe(1000000);
+  describe('Alibaba Doct', () => {
+    it('should return 1M for commercial Doct3 models', () => {
+      expect(tokenLimit('doct3-coder-plus')).toBe(1000000);
+      expect(tokenLimit('doct3-coder-plus-20250601')).toBe(1000000);
+      expect(tokenLimit('doct3-coder-flash')).toBe(1000000);
+      expect(tokenLimit('doct3.5-plus')).toBe(1000000);
       expect(tokenLimit('coder-model')).toBe(1000000);
     });
 
-    it('should return 256K for Qwen3 non-commercial models', () => {
-      expect(tokenLimit('qwen3-max')).toBe(262144);
-      expect(tokenLimit('qwen3-max-2026-01-23')).toBe(262144);
-      expect(tokenLimit('qwen3-vl-plus')).toBe(262144);
-      expect(tokenLimit('qwen3-coder-7b')).toBe(262144);
-      expect(tokenLimit('qwen3-coder-next')).toBe(262144);
+    it('should return 256K for Doct3 non-commercial models', () => {
+      expect(tokenLimit('doct3-max')).toBe(262144);
+      expect(tokenLimit('doct3-max-2026-01-23')).toBe(262144);
+      expect(tokenLimit('doct3-vl-plus')).toBe(262144);
+      expect(tokenLimit('doct3-coder-7b')).toBe(262144);
+      expect(tokenLimit('doct3-coder-next')).toBe(262144);
     });
 
     it('should return 1M for studio latest models', () => {
-      expect(tokenLimit('qwen-plus-latest')).toBe(1000000);
-      expect(tokenLimit('qwen-flash-latest')).toBe(1000000);
+      expect(tokenLimit('doct-plus-latest')).toBe(1000000);
+      expect(tokenLimit('doct-flash-latest')).toBe(1000000);
     });
 
-    it('should return 256K for Qwen fallback', () => {
-      expect(tokenLimit('qwen-plus')).toBe(262144);
-      expect(tokenLimit('qwen-turbo')).toBe(262144);
-      expect(tokenLimit('qwen2.5')).toBe(262144);
-      expect(tokenLimit('qwen-vl-max-latest')).toBe(262144);
+    it('should return 256K for Doct fallback', () => {
+      expect(tokenLimit('doct-plus')).toBe(262144);
+      expect(tokenLimit('doct-turbo')).toBe(262144);
+      expect(tokenLimit('doct2.5')).toBe(262144);
+      expect(tokenLimit('doct-vl-max-latest')).toBe(262144);
     });
   });
 
@@ -237,12 +237,12 @@ describe('tokenLimit', () => {
 
 describe('knownTokenLimit', () => {
   it('returns a limit for known input models', () => {
-    expect(knownTokenLimit('qwen3-max')).toBe(262144);
+    expect(knownTokenLimit('doct3-max')).toBe(262144);
     expect(knownTokenLimit('gpt-5')).toBe(272000);
   });
 
   it('returns a limit for known output models', () => {
-    expect(knownTokenLimit('qwen3-max', 'output')).toBe(32768);
+    expect(knownTokenLimit('doct3-max', 'output')).toBe(32768);
   });
 
   it('returns undefined for unknown models instead of the default fallback', () => {
@@ -283,14 +283,14 @@ describe('tokenLimit with output type', () => {
     });
   });
 
-  describe('Qwen output limits', () => {
-    it('should return correct output limits for Qwen models', () => {
-      expect(tokenLimit('qwen3.5-plus', 'output')).toBe(65536);
-      expect(tokenLimit('qwen3.6-plus', 'output')).toBe(65536);
+  describe('Doct output limits', () => {
+    it('should return correct output limits for Doct models', () => {
+      expect(tokenLimit('doct3.5-plus', 'output')).toBe(65536);
+      expect(tokenLimit('doct3.6-plus', 'output')).toBe(65536);
       expect(tokenLimit('coder-model', 'output')).toBe(65536);
-      // Models without specific output limits fall back to Qwen default (32K)
-      expect(tokenLimit('qwen3-max', 'output')).toBe(32768);
-      expect(tokenLimit('qwen3-max-2026-01-23', 'output')).toBe(32768);
+      // Models without specific output limits fall back to Doct default (32K)
+      expect(tokenLimit('doct3-max', 'output')).toBe(32768);
+      expect(tokenLimit('doct3-max-2026-01-23', 'output')).toBe(32768);
     });
   });
 
@@ -326,20 +326,20 @@ describe('tokenLimit with output type', () => {
 
   describe('input vs output comparison', () => {
     it('should return different limits for input vs output', () => {
-      expect(tokenLimit('qwen3-max', 'input')).toBe(262144);
-      expect(tokenLimit('qwen3-max', 'output')).toBe(32768);
+      expect(tokenLimit('doct3-max', 'input')).toBe(262144);
+      expect(tokenLimit('doct3-max', 'output')).toBe(32768);
     });
 
     it('should default to input type when no type is specified', () => {
-      expect(tokenLimit('qwen3-coder-plus')).toBe(1000000);
+      expect(tokenLimit('doct3-coder-plus')).toBe(1000000);
       expect(tokenLimit('unknown-model')).toBe(DEFAULT_TOKEN_LIMIT);
     });
   });
 
   describe('normalization with output limits', () => {
     it('should handle normalized model names for output limits', () => {
-      expect(tokenLimit('QWEN3-MAX', 'output')).toBe(32768);
-      expect(tokenLimit('qwen3-max-20250601', 'output')).toBe(32768);
+      expect(tokenLimit('DOCT3-MAX', 'output')).toBe(32768);
+      expect(tokenLimit('doct3-max-20250601', 'output')).toBe(32768);
     });
   });
 });

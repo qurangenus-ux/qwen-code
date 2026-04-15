@@ -54,12 +54,12 @@ describe('settings-migration', () => {
     testRig: TestRig,
     settings: Record<string, unknown>,
   ) => {
-    const qwenDir = join(
+    const doctDir = join(
       (testRig as unknown as { testDir: string }).testDir,
-      '.qwen',
+      '.doct',
     );
     writeFileSync(
-      join(qwenDir, 'settings.json'),
+      join(doctDir, 'settings.json'),
       JSON.stringify(settings, null, 2),
     );
   };
@@ -68,11 +68,11 @@ describe('settings-migration', () => {
    * Helper to read settings file from the test directory
    */
   const readSettingsFile = (testRig: TestRig): Record<string, unknown> => {
-    const qwenDir = join(
+    const doctDir = join(
       (testRig as unknown as { testDir: string }).testDir,
-      '.qwen',
+      '.doct',
     );
-    const content = readFileSync(join(qwenDir, 'settings.json'), 'utf-8');
+    const content = readFileSync(join(doctDir, 'settings.json'), 'utf-8');
     return JSON.parse(content) as Record<string, unknown>;
   };
 
@@ -190,7 +190,7 @@ describe('settings-migration', () => {
 
       // Expected output based on stable test output
       expect(migratedSettings['$version']).toBe(3);
-      expect(migratedSettings['model']).toEqual({ name: 'qwen-plus' });
+      expect(migratedSettings['model']).toEqual({ name: 'doct-plus' });
       expect(migratedSettings['ui']).toEqual({
         hideWindowTitle: true,
         theme: 'light',

@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { AuthType } from '@qwen-code/qwen-code-core';
+import { AuthType } from '@doct-code/doct-code-core';
 import type { AuthMethod } from '@agentclientprotocol/sdk';
 
 export function buildAuthMethods(): AuthMethod[] {
@@ -19,13 +19,13 @@ export function buildAuthMethods(): AuthMethod[] {
       },
     },
     {
-      id: AuthType.QWEN_OAUTH,
-      name: 'Qwen OAuth',
+      id: AuthType.DOCT_OAUTH,
+      name: 'Doct OAuth',
       description:
-        'OAuth authentication for Qwen models with free daily requests (ending 2026-04-15)',
+        'OAuth authentication for Doct models with free daily requests (ending 2026-04-15)',
       _meta: {
         type: 'terminal',
-        args: ['--auth-type=qwen-oauth'],
+        args: ['--auth-type=doct-oauth'],
       },
     },
   ];
@@ -43,8 +43,8 @@ export function pickAuthMethodsForDetails(details?: string): AuthMethod[] {
   if (!details) {
     return authMethods;
   }
-  if (details.includes('qwen-oauth') || details.includes('Qwen OAuth')) {
-    const narrowed = filterAuthMethodsById(authMethods, AuthType.QWEN_OAUTH);
+  if (details.includes('doct-oauth') || details.includes('Doct OAuth')) {
+    const narrowed = filterAuthMethodsById(authMethods, AuthType.DOCT_OAUTH);
     return narrowed.length ? narrowed : authMethods;
   }
   return authMethods;

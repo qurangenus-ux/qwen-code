@@ -1,13 +1,13 @@
 /**
  * @license
- * Copyright 2025 Qwen
+ * Copyright 2025 Doct
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MessageEmitter } from './MessageEmitter.js';
 import type { SessionContext } from '../types.js';
-import type { Config } from '@qwen-code/qwen-code-core';
+import type { Config } from '@doct-code/doct-code-core';
 
 describe('MessageEmitter', () => {
   let mockContext: SessionContext;

@@ -17,9 +17,9 @@ export * from './permissions/index.js';
 
 // Model configuration
 export {
-  DEFAULT_QWEN_MODEL,
-  DEFAULT_QWEN_FLASH_MODEL,
-  DEFAULT_QWEN_EMBEDDING_MODEL,
+  DEFAULT_DOCT_MODEL,
+  DEFAULT_DOCT_FLASH_MODEL,
+  DEFAULT_DOCT_EMBEDDING_MODEL,
   MAINLINE_CODER_MODEL,
 } from './config/models.js';
 export {
@@ -38,7 +38,7 @@ export {
   type ModelProvidersConfig,
   type ModelSwitchMetadata,
   type OnModelChangeCallback,
-  QWEN_OAUTH_MODELS,
+  DOCT_OAUTH_MODELS,
   resolveModelConfig,
   type ResolvedModelConfig,
   validateModelConfig,
@@ -164,7 +164,7 @@ export type {
 // Telemetry
 // ============================================================================
 
-export { QwenLogger } from './telemetry/qwen-logger/qwen-logger.js';
+export { DoctLogger } from './telemetry/doct-logger/doct-logger.js';
 export * from './telemetry/index.js';
 export {
   logAuth,
@@ -256,7 +256,7 @@ export * from './utils/yaml-parser.js';
 // OAuth & Authentication
 // ============================================================================
 
-export * from './qwen/qwenOAuth2.js';
+export * from './doct/doctOAuth2.js';
 
 // ============================================================================
 // Testing Utilities

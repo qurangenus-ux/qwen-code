@@ -637,7 +637,7 @@ describe('CoreToolScheduler', () => {
       if (completedCall.status === 'error') {
         const errorMessage = completedCall.response.error?.message;
         expect(errorMessage).toBe(
-          'Qwen Code requires permission to use write_file, but that permission was declined.',
+          'Doct Code requires permission to use write_file, but that permission was declined.',
         );
         // Should NOT contain "not found in registry"
         expect(errorMessage).not.toContain('not found in registry');
@@ -3006,15 +3006,15 @@ describe('Fire hook functions integration', () => {
 
   describe('Concurrent tool execution', () => {
     // Ensure tests are deterministic regardless of environment.
-    const origEnv = process.env['QWEN_CODE_MAX_TOOL_CONCURRENCY'];
+    const origEnv = process.env['DOCT_CODE_MAX_TOOL_CONCURRENCY'];
     beforeEach(() => {
-      delete process.env['QWEN_CODE_MAX_TOOL_CONCURRENCY'];
+      delete process.env['DOCT_CODE_MAX_TOOL_CONCURRENCY'];
     });
     afterEach(() => {
       if (origEnv !== undefined) {
-        process.env['QWEN_CODE_MAX_TOOL_CONCURRENCY'] = origEnv;
+        process.env['DOCT_CODE_MAX_TOOL_CONCURRENCY'] = origEnv;
       } else {
-        delete process.env['QWEN_CODE_MAX_TOOL_CONCURRENCY'];
+        delete process.env['DOCT_CODE_MAX_TOOL_CONCURRENCY'];
       }
     });
 

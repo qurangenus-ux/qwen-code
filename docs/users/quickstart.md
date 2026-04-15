@@ -1,8 +1,8 @@
 # Quickstart
 
-> 👏 Welcome to Qwen Code!
+> 👏 Welcome to Doct Code!
 
-This quickstart guide will have you using AI-powered coding assistance in just a few minutes. By the end, you'll understand how to use Qwen Code for common development tasks.
+This quickstart guide will have you using AI-powered coding assistance in just a few minutes. By the end, you'll understand how to use Doct Code for common development tasks.
 
 ## Before you begin
 
@@ -10,24 +10,24 @@ Make sure you have:
 
 - A **terminal** or command prompt open
 - A code project to work with
-- A [Qwen Code](https://chat.qwen.ai/auth?mode=register) account
+- A [Doct Code](https://chat.doct.ai/auth?mode=register) account
 
-## Step 1: Install Qwen Code
+## Step 1: Install Doct Code
 
-To install Qwen Code, use one of the following methods:
+To install Doct Code, use one of the following methods:
 
 ### Quick Install (Recommended)
 
 **Linux / macOS**
 
 ```sh
-curl -fsSL https://qwen-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-qwen.sh | bash
+curl -fsSL https://doct-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-doct.sh | bash
 ```
 
 **Windows (Run as Administrator CMD)**
 
 ```sh
-curl -fsSL -o %TEMP%\install-qwen.bat https://qwen-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-qwen.bat && %TEMP%\install-qwen.bat
+curl -fsSL -o %TEMP%\install-doct.bat https://doct-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-doct.bat && %TEMP%\install-doct.bat
 ```
 
 > [!note]
@@ -43,22 +43,22 @@ Make sure you have Node.js 20 or later installed. Download it from [nodejs.org](
 **NPM**
 
 ```bash
-npm install -g @qwen-code/qwen-code@latest
+npm install -g @doct-code/doct-code@latest
 ```
 
 **Homebrew (macOS, Linux)**
 
 ```bash
-brew install qwen-code
+brew install doct-code
 ```
 
 ## Step 2: Log in to your account
 
-Qwen Code requires an account to use. When you start an interactive session with the `qwen` command, you'll be prompted to log in:
+Doct Code requires an account to use. When you start an interactive session with the `doct` command, you'll be prompted to log in:
 
 ```bash
 # You'll be prompted to log in on first use
-qwen
+doct
 ```
 
 ```bash
@@ -66,58 +66,58 @@ qwen
 /auth
 ```
 
-Select `Qwen OAuth`, log in to your account and follow the prompts to confirm. Once logged in, your credentials are stored and you won't need to log in again.
+Select `Doct OAuth`, log in to your account and follow the prompts to confirm. Once logged in, your credentials are stored and you won't need to log in again.
 
 > [!note]
 >
-> When you first authenticate Qwen Code with your Qwen account, a workspace called ".qwen" is automatically created for you. This workspace provides centralized cost tracking and management for all Qwen Code usage in your organization.
+> When you first authenticate Doct Code with your Doct account, a workspace called ".doct" is automatically created for you. This workspace provides centralized cost tracking and management for all Doct Code usage in your organization.
 
 > [!tip]
 >
-> You can also configure authentication directly from the terminal without starting a session by running `qwen auth`. Use `qwen auth status` to check your current configuration at any time. See the [Authentication](./configuration/auth) page for details.
+> You can also configure authentication directly from the terminal without starting a session by running `doct auth`. Use `doct auth status` to check your current configuration at any time. See the [Authentication](./configuration/auth) page for details.
 
 ## Step 3: Start your first session
 
-Open your terminal in any project directory and start Qwen Code:
+Open your terminal in any project directory and start Doct Code:
 
 ```bash
 # optiona
 cd /path/to/your/project
-# start qwen
-qwen
+# start doct
+doct
 ```
 
-You'll see the Qwen Code welcome screen with your session information, recent conversations, and latest updates. Type `/help` for available commands.
+You'll see the Doct Code welcome screen with your session information, recent conversations, and latest updates. Type `/help` for available commands.
 
-## Chat with Qwen Code
+## Chat with Doct Code
 
 ### Ask your first question
 
-Qwen Code will analyze your files and provide a summary. You can also ask more specific questions:
+Doct Code will analyze your files and provide a summary. You can also ask more specific questions:
 
 ```
 explain the folder structure
 ```
 
-You can also ask Qwen Code about its own capabilities:
+You can also ask Doct Code about its own capabilities:
 
 ```
-what can Qwen Code do?
+what can Doct Code do?
 ```
 
 > [!note]
 >
-> Qwen Code reads your files as needed - you don't have to manually add context. Qwen Code also has access to its own documentation and can answer questions about its features and capabilities.
+> Doct Code reads your files as needed - you don't have to manually add context. Doct Code also has access to its own documentation and can answer questions about its features and capabilities.
 
 ### Make your first code change
 
-Now let's make Qwen Code do some actual coding. Try a simple task:
+Now let's make Doct Code do some actual coding. Try a simple task:
 
 ```
 add a hello world function to the main file
 ```
 
-Qwen Code will:
+Doct Code will:
 
 1. Find the appropriate file
 2. Show you the proposed changes
@@ -126,11 +126,11 @@ Qwen Code will:
 
 > [!note]
 >
-> Qwen Code always asks for permission before modifying files. You can approve individual changes or enable "Accept all" mode for a session.
+> Doct Code always asks for permission before modifying files. You can approve individual changes or enable "Accept all" mode for a session.
 
-### Use Git with Qwen Code
+### Use Git with Doct Code
 
-Qwen Code makes Git operations conversational:
+Doct Code makes Git operations conversational:
 
 ```
 what files have I changed?
@@ -156,7 +156,7 @@ help me resolve merge conflicts
 
 ### Fix a bug or add a feature
 
-Qwen Code is proficient at debugging and feature implementation.
+Doct Code is proficient at debugging and feature implementation.
 
 Describe what you want in natural language:
 
@@ -170,7 +170,7 @@ Or fix existing issues:
 there's a bug where users can submit empty forms - fix it
 ```
 
-Qwen Code will:
+Doct Code will:
 
 - Locate the relevant code
 - Understand the context
@@ -179,7 +179,7 @@ Qwen Code will:
 
 ### Test out other common workflows
 
-There are a number of ways to work with Qwen Code:
+There are a number of ways to work with Doct Code:
 
 **Refactor code**
 
@@ -207,7 +207,7 @@ review my changes and suggest improvements
 
 > [!tip]
 >
-> **Remember**: Qwen Code is your AI pair programmer. Talk to it like you would a helpful colleague - describe what you want to achieve, and it will help you get there.
+> **Remember**: Doct Code is your AI pair programmer. Talk to it like you would a helpful colleague - describe what you want to achieve, and it will help you get there.
 
 ## Essential commands
 
@@ -215,18 +215,18 @@ Here are the most important commands for daily use:
 
 | Command               | What it does                                     | Example                       |
 | --------------------- | ------------------------------------------------ | ----------------------------- |
-| `qwen`                | start Qwen Code                                  | `qwen`                        |
+| `doct`                | start Doct Code                                  | `doct`                        |
 | `/auth`               | Change authentication method (in session)        | `/auth`                       |
-| `qwen auth`           | Configure authentication from the terminal       | `qwen auth`                   |
-| `qwen auth status`    | Check current authentication status              | `qwen auth status`            |
+| `doct auth`           | Configure authentication from the terminal       | `doct auth`                   |
+| `doct auth status`    | Check current authentication status              | `doct auth status`            |
 | `/help`               | Display help information for available commands  | `/help` or `/?`               |
 | `/compress`           | Replace chat history with summary to save Tokens | `/compress`                   |
 | `/clear`              | Clear terminal screen content                    | `/clear` (shortcut: `Ctrl+L`) |
-| `/theme`              | Change Qwen Code visual theme                    | `/theme`                      |
+| `/theme`              | Change Doct Code visual theme                    | `/theme`                      |
 | `/language`           | View or change language settings                 | `/language`                   |
 | → `ui [language]`     | Set UI interface language                        | `/language ui zh-CN`          |
 | → `output [language]` | Set LLM output language                          | `/language output Chinese`    |
-| `/quit`               | Exit Qwen Code immediately                       | `/quit` or `/exit`            |
+| `/quit`               | Exit Doct Code immediately                       | `/quit` or `/exit`            |
 
 See the [CLI reference](./features/commands) for a complete list of commands.
 
@@ -247,9 +247,9 @@ See the [CLI reference](./features/commands) for a complete list of commands.
 3. build a webpage that allows users to see and edit their information
 ```
 
-**Let Qwen Code explore first**
+**Let Doct Code explore first**
 
-- Before making changes, let Qwen Code understand your code:
+- Before making changes, let Doct Code understand your code:
 
 ```
 analyze the database schema
@@ -268,6 +268,6 @@ build a dashboard showing products that are most frequently returned by our UK c
 
 ## Getting help
 
-- **In Qwen Code**: Type `/help` or ask "how do I..."
+- **In Doct Code**: Type `/help` or ask "how do I..."
 - **Documentation**: You're here! Browse other guides
-- **Community**: Join our [GitHub Discussion](https://github.com/QwenLM/qwen-code/discussions) for tips and support
+- **Community**: Join our [GitHub Discussion](https://github.com/DoctLM/doct-code/discussions) for tips and support

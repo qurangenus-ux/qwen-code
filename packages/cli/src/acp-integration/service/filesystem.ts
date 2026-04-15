@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -15,7 +15,7 @@ import { RequestError } from '@agentclientprotocol/sdk';
 import type {
   FileSystemService,
   ReadTextFileResponse,
-} from '@qwen-code/qwen-code-core';
+} from '@doct-code/doct-code-core';
 
 const RESOURCE_NOT_FOUND_CODE = -32002;
 

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -66,7 +66,7 @@ export const AssistantMessage: FC<AssistantMessageProps> = ({
 
   return (
     <div
-      className={`qwen-message message-item assistant-message-container ${getStatusClass()}`}
+      className={`doct-message message-item assistant-message-container ${getStatusClass()}`}
       data-first={isFirst}
       data-last={isLast}
       style={{

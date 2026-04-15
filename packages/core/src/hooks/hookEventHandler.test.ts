@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2026 Qwen Team
+ * Copyright 2026 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -1359,7 +1359,7 @@ describe('HookEventHandler', () => {
       );
 
       await hookEventHandler.fireNotificationEvent(
-        'Qwen Code needs your permission to use Bash',
+        'Doct Code needs your permission to use Bash',
         NotificationType.PermissionPrompt,
         'Permission needed',
       );
@@ -1372,7 +1372,7 @@ describe('HookEventHandler', () => {
         title?: string;
       };
 
-      expect(input.message).toBe('Qwen Code needs your permission to use Bash');
+      expect(input.message).toBe('Doct Code needs your permission to use Bash');
       expect(input.notification_type).toBe('permission_prompt');
       expect(input.title).toBe('Permission needed');
     });
@@ -1388,7 +1388,7 @@ describe('HookEventHandler', () => {
       );
 
       await hookEventHandler.fireNotificationEvent(
-        'Qwen Code is waiting for your input',
+        'Doct Code is waiting for your input',
         NotificationType.IdlePrompt,
         'Waiting for input',
       );
@@ -1909,7 +1909,7 @@ describe('HookEventHandler', () => {
 
       await hookEventHandler.fireSubagentStartEvent(
         'agent-456',
-        'qwen-tester',
+        'doct-tester',
         PermissionMode.Plan,
       );
 
@@ -1923,7 +1923,7 @@ describe('HookEventHandler', () => {
       };
 
       expect(input.agent_id).toBe('agent-456');
-      expect(input.agent_type).toBe('qwen-tester');
+      expect(input.agent_type).toBe('doct-tester');
       expect(input.permission_mode).toBe(PermissionMode.Plan);
       expect(input.hook_event_name).toBe(HookEventName.SubagentStart);
     });
@@ -2072,7 +2072,7 @@ describe('HookEventHandler', () => {
 
       await hookEventHandler.fireSubagentStopEvent(
         'agent-456',
-        'qwen-tester',
+        'doct-tester',
         '/transcript/path.jsonl',
         'last message from agent',
         true,
@@ -2092,7 +2092,7 @@ describe('HookEventHandler', () => {
       };
 
       expect(input.agent_id).toBe('agent-456');
-      expect(input.agent_type).toBe('qwen-tester');
+      expect(input.agent_type).toBe('doct-tester');
       expect(input.agent_transcript_path).toBe('/transcript/path.jsonl');
       expect(input.last_assistant_message).toBe('last message from agent');
       expect(input.stop_hook_active).toBe(true);

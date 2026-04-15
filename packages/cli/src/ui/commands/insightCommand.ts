@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Code
+ * Copyright 2025 Doct Code
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -11,7 +11,7 @@ import type { HistoryItemInsightProgress } from '../types.js';
 import { t } from '../../i18n/index.js';
 import { join } from 'path';
 import { StaticInsightGenerator } from '../../services/insight/generators/StaticInsightGenerator.js';
-import { createDebugLogger, Storage } from '@qwen-code/qwen-code-core';
+import { createDebugLogger, Storage } from '@doct-code/doct-code-core';
 import open from 'open';
 
 const logger = createDebugLogger('DataProcessor');

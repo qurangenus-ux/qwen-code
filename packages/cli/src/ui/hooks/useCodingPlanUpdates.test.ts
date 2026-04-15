@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -12,7 +12,7 @@ import {
   getCodingPlanConfig,
   CodingPlanRegion,
 } from '../../constants/codingPlan.js';
-import { AuthType } from '@qwen-code/qwen-code-core';
+import { AuthType } from '@doct-code/doct-code-core';
 
 // Get region configs for testing
 const chinaConfig = getCodingPlanConfig(CodingPlanRegion.CHINA);
@@ -33,7 +33,7 @@ describe('useCodingPlanUpdates', () => {
   const mockConfig = {
     reloadModelProvidersConfig: vi.fn(),
     refreshAuth: vi.fn(),
-    getModel: vi.fn().mockReturnValue('qwen-max'),
+    getModel: vi.fn().mockReturnValue('doct-max'),
   };
 
   const mockAddItem = vi.fn();
@@ -489,14 +489,14 @@ describe('useCodingPlanUpdates', () => {
       mockSettings.merged.modelProviders = {
         [AuthType.USE_OPENAI]: [
           {
-            id: 'qwen3.5-plus',
+            id: 'doct3.5-plus',
             baseUrl: chinaConfig.baseUrl,
             envKey: CODING_PLAN_ENV_KEY,
           },
         ],
       };
       // Simulate the user's current model being one that exists in the new template
-      mockConfig.getModel.mockReturnValue('qwen3.5-plus');
+      mockConfig.getModel.mockReturnValue('doct3.5-plus');
       mockConfig.refreshAuth.mockResolvedValue(undefined);
 
       const { result } = renderHook(() =>
@@ -534,7 +534,7 @@ describe('useCodingPlanUpdates', () => {
       );
 
       // Reset mock
-      mockConfig.getModel.mockReturnValue('qwen-max');
+      mockConfig.getModel.mockReturnValue('doct-max');
     });
 
     it('should show "model switched" message when current model is not in new template', async () => {
@@ -583,7 +583,7 @@ describe('useCodingPlanUpdates', () => {
       );
 
       // Reset mock
-      mockConfig.getModel.mockReturnValue('qwen-max');
+      mockConfig.getModel.mockReturnValue('doct-max');
     });
 
     it('should handle update errors gracefully', async () => {

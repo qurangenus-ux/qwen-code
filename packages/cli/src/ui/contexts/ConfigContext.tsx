@@ -5,7 +5,7 @@
  */
 
 import React, { useContext } from 'react';
-import { type Config } from '@qwen-code/qwen-code-core';
+import { type Config } from '@doct-code/doct-code-core';
 
 export const ConfigContext = React.createContext<Config | undefined>(undefined);
 

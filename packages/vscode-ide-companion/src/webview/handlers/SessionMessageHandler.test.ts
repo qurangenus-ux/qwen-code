@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -67,7 +67,7 @@ describe('SessionMessageHandler', () => {
       data: { modelId: 'glm-5' },
     });
 
-    expect(mockExecuteCommand).toHaveBeenCalledWith('qwenCode.openNewChatTab', {
+    expect(mockExecuteCommand).toHaveBeenCalledWith('doctCode.openNewChatTab', {
       initialModelId: 'glm-5',
     });
   });
@@ -207,7 +207,7 @@ describe('SessionMessageHandler', () => {
     );
 
     await handler.handle({
-      type: 'newQwenSession',
+      type: 'newDoctSession',
     });
 
     expect(handler.getCurrentConversationId()).toBeNull();

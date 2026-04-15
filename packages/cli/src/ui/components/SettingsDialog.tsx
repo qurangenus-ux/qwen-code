@@ -29,7 +29,7 @@ import {
 } from '../../utils/settingsUtils.js';
 import { updateOutputLanguageFile } from '../../utils/languageUtils.js';
 import { useVimMode } from '../contexts/VimModeContext.js';
-import { createDebugLogger, type Config } from '@qwen-code/qwen-code-core';
+import { createDebugLogger, type Config } from '@doct-code/doct-code-core';
 import { useKeypress } from '../hooks/useKeypress.js';
 import chalk from 'chalk';
 import { cpSlice, cpLen, stripUnsafeCharacters } from '../utils/textUtils.js';
@@ -936,7 +936,7 @@ export function SettingsDialog({
       {showRestartPrompt && (
         <Text color={theme.status.warning}>
           {t(
-            'To see changes, Qwen Code must be restarted. Press r to exit and apply changes now.',
+            'To see changes, Doct Code must be restarted. Press r to exit and apply changes now.',
           )}
         </Text>
       )}

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -51,7 +51,7 @@ vi.mock('node:stream', async (importOriginal) => {
 });
 
 // Mock core dependencies
-vi.mock('@qwen-code/qwen-code-core', () => ({
+vi.mock('@doct-code/doct-code-core', () => ({
   createDebugLogger: () => ({
     debug: vi.fn(),
     error: vi.fn(),
@@ -61,8 +61,8 @@ vi.mock('@qwen-code/qwen-code-core', () => ({
   APPROVAL_MODES: [],
   AuthType: {},
   clearCachedCredentialFile: vi.fn(),
-  QwenOAuth2Event: {},
-  qwenOAuth2Events: { on: vi.fn(), off: vi.fn() },
+  DoctOAuth2Event: {},
+  doctOAuth2Events: { on: vi.fn(), off: vi.fn() },
   MCPServerConfig: {},
   SessionService: vi.fn(),
   tokenLimit: vi.fn(),
@@ -80,7 +80,7 @@ vi.mock('../utils/acpModelUtils.js', () => ({
 }));
 
 import { runAcpAgent } from './acpAgent.js';
-import type { Config } from '@qwen-code/qwen-code-core';
+import type { Config } from '@doct-code/doct-code-core';
 import type { LoadedSettings } from '../config/settings.js';
 import type { CliArgs } from '../config/config.js';
 

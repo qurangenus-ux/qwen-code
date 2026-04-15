@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen
+ * Copyright 2025 Doct
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -11,11 +11,11 @@ import {
   AttentionNotificationReason,
 } from '../../utils/attentionNotification.js';
 import type { LoadedSettings } from '../../config/settings.js';
-import type { Config } from '@qwen-code/qwen-code-core';
+import type { Config } from '@doct-code/doct-code-core';
 import {
   fireNotificationHook,
   NotificationType,
-} from '@qwen-code/qwen-code-core';
+} from '@doct-code/doct-code-core';
 
 export const LONG_TASK_NOTIFICATION_THRESHOLD_SECONDS = 20;
 
@@ -83,7 +83,7 @@ export const useAttentionNotifications = ({
         if (hooksEnabled && messageBus) {
           fireNotificationHook(
             messageBus,
-            'Qwen Code is waiting for your input',
+            'Doct Code is waiting for your input',
             NotificationType.IdlePrompt,
             'Waiting for input',
           ).catch(() => {

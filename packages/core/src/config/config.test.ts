@@ -14,7 +14,7 @@ import { setGeminiMdFilename as mockSetGeminiMdFilename } from '../tools/memoryT
 import {
   DEFAULT_TELEMETRY_TARGET,
   DEFAULT_OTLP_ENDPOINT,
-  QwenLogger,
+  DoctLogger,
 } from '../telemetry/index.js';
 import type {
   ContentGenerator,
@@ -123,10 +123,10 @@ vi.mock('../tools/read-many-files', () => ({
 vi.mock('../tools/memoryTool', () => ({
   MemoryTool: createToolMock('save_memory'),
   setGeminiMdFilename: vi.fn(),
-  getCurrentGeminiMdFilename: vi.fn(() => 'QWEN.md'), // Mock the original filename
-  getAllGeminiMdFilenames: vi.fn(() => ['QWEN.md', 'AGENTS.md']),
-  DEFAULT_CONTEXT_FILENAME: 'QWEN.md',
-  QWEN_CONFIG_DIR: '.qwen',
+  getCurrentGeminiMdFilename: vi.fn(() => 'DOCT.md'), // Mock the original filename
+  getAllGeminiMdFilenames: vi.fn(() => ['DOCT.md', 'AGENTS.md']),
+  DEFAULT_CONTEXT_FILENAME: 'DOCT.md',
+  DOCT_CONFIG_DIR: '.doct',
 }));
 
 vi.mock('../core/contentGenerator.js');
@@ -207,7 +207,7 @@ vi.mock('../core/toolHookTriggers.js', () => ({
 }));
 
 describe('Server Config (config.ts)', () => {
-  const MODEL = 'qwen3-coder-plus';
+  const MODEL = 'doct3-coder-plus';
 
   // Default mock for canUseRipgrep to return true (tests that care about ripgrep will override this)
   beforeEach(() => {
@@ -215,7 +215,7 @@ describe('Server Config (config.ts)', () => {
   });
   const SANDBOX: SandboxConfig = {
     command: 'docker',
-    image: 'qwen-code-sandbox',
+    image: 'doct-code-sandbox',
   };
   const TARGET_DIR = '/path/to/target';
   const DEBUG_MODE = false;
@@ -240,7 +240,7 @@ describe('Server Config (config.ts)', () => {
   beforeEach(() => {
     // Reset mocks if necessary
     vi.clearAllMocks();
-    vi.spyOn(QwenLogger.prototype, 'logStartSessionEvent').mockImplementation(
+    vi.spyOn(DoctLogger.prototype, 'logStartSessionEvent').mockImplementation(
       async () => undefined,
     );
 
@@ -322,7 +322,7 @@ describe('Server Config (config.ts)', () => {
       const authType = AuthType.USE_GEMINI;
       const mockContentConfig = {
         apiKey: 'test-key',
-        model: 'qwen3-coder-plus',
+        model: 'doct3-coder-plus',
         authType,
       };
 
@@ -359,7 +359,7 @@ describe('Server Config (config.ts)', () => {
       const authType = AuthType.USE_GEMINI;
       const mockContentConfig = {
         apiKey: 'test-key',
-        model: 'qwen3-coder-plus',
+        model: 'doct3-coder-plus',
         authType,
       };
 
@@ -387,7 +387,7 @@ describe('Server Config (config.ts)', () => {
       const authType = AuthType.USE_GEMINI;
       const mockContentConfig = {
         apiKey: 'test-key',
-        model: 'qwen3-coder-plus',
+        model: 'doct3-coder-plus',
         authType,
       };
 
@@ -423,14 +423,14 @@ describe('Server Config (config.ts)', () => {
     });
   });
 
-  describe('model switching optimization (QWEN_OAUTH)', () => {
-    it('should switch qwen-oauth model in-place without refreshing auth when safe', async () => {
+  describe('model switching optimization (DOCT_OAUTH)', () => {
+    it('should switch doct-oauth model in-place without refreshing auth when safe', async () => {
       const config = new Config(baseParams);
 
       const mockContentConfig: ContentGeneratorConfig = {
-        authType: AuthType.QWEN_OAUTH,
+        authType: AuthType.DOCT_OAUTH,
         model: 'coder-model',
-        apiKey: 'QWEN_OAUTH_DYNAMIC_TOKEN',
+        apiKey: 'DOCT_OAUTH_DYNAMIC_TOKEN',
         baseUrl: DEFAULT_DASHSCOPE_BASE_URL,
         timeout: 60000,
         maxRetries: 3,
@@ -453,13 +453,13 @@ describe('Server Config (config.ts)', () => {
         embedContent: vi.fn(),
       } as unknown as ContentGenerator);
 
-      // Establish initial qwen-oauth content generator config/content generator.
-      await config.refreshAuth(AuthType.QWEN_OAUTH);
+      // Establish initial doct-oauth content generator config/content generator.
+      await config.refreshAuth(AuthType.DOCT_OAUTH);
 
       // Spy after initial refresh to ensure model switch does not re-trigger refreshAuth.
       const refreshSpy = vi.spyOn(config, 'refreshAuth');
 
-      await config.switchModel(AuthType.QWEN_OAUTH, 'coder-model');
+      await config.switchModel(AuthType.DOCT_OAUTH, 'coder-model');
 
       expect(config.getModel()).toBe('coder-model');
       expect(refreshSpy).not.toHaveBeenCalled();
@@ -696,7 +696,7 @@ describe('Server Config (config.ts)', () => {
       });
       await config.initialize();
 
-      expect(QwenLogger.prototype.logStartSessionEvent).toHaveBeenCalledOnce();
+      expect(DoctLogger.prototype.logStartSessionEvent).toHaveBeenCalledOnce();
     });
   });
 
@@ -1503,7 +1503,7 @@ describe('Model Switching and Config Updates', () => {
     cwd: '/tmp',
     targetDir: '/path/to/target',
     debugMode: false,
-    model: 'qwen3-coder-plus',
+    model: 'doct3-coder-plus',
     usageStatisticsEnabled: false,
     telemetry: { enabled: false },
   };
@@ -1517,8 +1517,8 @@ describe('Model Switching and Config Updates', () => {
 
     // Initialize with first model
     const initialConfig: ContentGeneratorConfig = {
-      ['model']: 'qwen3-coder-plus',
-      ['authType']: AuthType.QWEN_OAUTH,
+      ['model']: 'doct3-coder-plus',
+      ['authType']: AuthType.DOCT_OAUTH,
       ['apiKey']: 'test-key',
       ['contextWindowSize']: 1_000_000,
       ['samplingParams']: { temperature: 0.7 },
@@ -1533,17 +1533,17 @@ describe('Model Switching and Config Updates', () => {
       },
     });
 
-    await config.refreshAuth(AuthType.QWEN_OAUTH);
+    await config.refreshAuth(AuthType.DOCT_OAUTH);
 
     // Verify initial config
     const contentGenConfig = config.getContentGeneratorConfig();
-    expect(contentGenConfig['model']).toBe('qwen3-coder-plus');
+    expect(contentGenConfig['model']).toBe('doct3-coder-plus');
     expect(contentGenConfig['contextWindowSize']).toBe(1_000_000);
 
     // Switch to a different model with different token limits
     const newConfig: ContentGeneratorConfig = {
-      ['model']: 'qwen-max',
-      ['authType']: AuthType.QWEN_OAUTH,
+      ['model']: 'doct-max',
+      ['authType']: AuthType.DOCT_OAUTH,
       ['apiKey']: 'test-key',
       ['contextWindowSize']: 128_000,
       ['samplingParams']: { temperature: 0.8 },
@@ -1568,11 +1568,11 @@ describe('Model Switching and Config Updates', () => {
           requiresRefresh: boolean,
         ) => Promise<void>;
       }
-    ).handleModelChange(AuthType.QWEN_OAUTH, false);
+    ).handleModelChange(AuthType.DOCT_OAUTH, false);
 
     // Verify all fields are updated
     const updatedConfig = config.getContentGeneratorConfig();
-    expect(updatedConfig['model']).toBe('qwen-max');
+    expect(updatedConfig['model']).toBe('doct-max');
     expect(updatedConfig['contextWindowSize']).toBe(128_000);
     expect(updatedConfig['samplingParams']?.temperature).toBe(0.8);
     expect(updatedConfig['enableCacheControl']).toBe(false);
@@ -1587,13 +1587,13 @@ describe('Model Switching and Config Updates', () => {
     expect(sources['enableCacheControl']?.kind).toBe('settings');
   });
 
-  it('should trigger full refresh when switching to non-qwen-oauth provider', async () => {
+  it('should trigger full refresh when switching to non-doct-oauth provider', async () => {
     const config = new Config(baseParams);
 
-    // Initialize with qwen-oauth
+    // Initialize with doct-oauth
     const initialConfig: ContentGeneratorConfig = {
-      ['model']: 'qwen3-coder-plus',
-      ['authType']: AuthType.QWEN_OAUTH,
+      ['model']: 'doct3-coder-plus',
+      ['authType']: AuthType.DOCT_OAUTH,
       ['apiKey']: 'test-key',
       ['contextWindowSize']: 1_000_000,
     };
@@ -1603,7 +1603,7 @@ describe('Model Switching and Config Updates', () => {
       sources: {},
     });
 
-    await config.refreshAuth(AuthType.QWEN_OAUTH);
+    await config.refreshAuth(AuthType.DOCT_OAUTH);
 
     // Switch to different auth type (should trigger full refresh)
     const newConfig: ContentGeneratorConfig = {
@@ -1644,8 +1644,8 @@ describe('Model Switching and Config Updates', () => {
 
     // Initialize with config that has undefined token limits
     const initialConfig: ContentGeneratorConfig = {
-      ['model']: 'qwen3-coder-plus',
-      ['authType']: AuthType.QWEN_OAUTH,
+      ['model']: 'doct3-coder-plus',
+      ['authType']: AuthType.DOCT_OAUTH,
       ['apiKey']: 'test-key',
       ['contextWindowSize']: undefined,
     };
@@ -1655,12 +1655,12 @@ describe('Model Switching and Config Updates', () => {
       sources: {},
     });
 
-    await config.refreshAuth(AuthType.QWEN_OAUTH);
+    await config.refreshAuth(AuthType.DOCT_OAUTH);
 
     // Switch to model with defined limits
     const newConfig: ContentGeneratorConfig = {
-      ['model']: 'qwen-max',
-      ['authType']: AuthType.QWEN_OAUTH,
+      ['model']: 'doct-max',
+      ['authType']: AuthType.DOCT_OAUTH,
       ['apiKey']: 'test-key',
       ['contextWindowSize']: 128_000,
     };
@@ -1677,7 +1677,7 @@ describe('Model Switching and Config Updates', () => {
           requiresRefresh: boolean,
         ) => Promise<void>;
       }
-    ).handleModelChange(AuthType.QWEN_OAUTH, false);
+    ).handleModelChange(AuthType.DOCT_OAUTH, false);
 
     // Verify limits are now defined
     const updatedConfig = config.getContentGeneratorConfig();

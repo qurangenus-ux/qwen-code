@@ -9,13 +9,13 @@ import type {
   ContentGeneratorConfig,
   ModelProvidersConfig,
   ProviderModelConfig,
-} from '@qwen-code/qwen-code-core';
+} from '@doct-code/doct-code-core';
 import {
   AuthEvent,
   AuthType,
   getErrorMessage,
   logAuth,
-} from '@qwen-code/qwen-code-core';
+} from '@doct-code/doct-code-core';
 import { useCallback, useEffect, useState } from 'react';
 import type { LoadedSettings } from '../../config/settings.js';
 import { getPersistScopeForModelSelection } from '../../config/modelProvidersScope.js';
@@ -25,7 +25,7 @@ export interface OpenAICredentials {
   baseUrl?: string;
   model?: string;
 }
-import { useQwenAuth } from '../hooks/useQwenAuth.js';
+import { useDoctAuth } from '../hooks/useDoctAuth.js';
 import { AuthState, MessageType } from '../types.js';
 import type { HistoryItem } from '../types.js';
 import { t } from '../../i18n/index.js';
@@ -42,7 +42,7 @@ import {
   type AlibabaStandardRegion,
 } from '../../constants/alibabaStandardApiKey.js';
 
-export type { QwenAuthState } from '../hooks/useQwenAuth.js';
+export type { DoctAuthState } from '../hooks/useDoctAuth.js';
 
 export const useAuthCommand = (
   settings: LoadedSettings,
@@ -64,7 +64,7 @@ export const useAuthCommand = (
     undefined,
   );
 
-  const { qwenAuthState, cancelQwenAuth } = useQwenAuth(
+  const { doctAuthState, cancelDoctAuth } = useDoctAuth(
     pendingAuthType,
     isAuthenticating,
   );
@@ -126,9 +126,9 @@ export const useAuthCommand = (
           );
         }
 
-        // Only update credentials if not switching to QWEN_OAUTH,
-        // so that OpenAI credentials are preserved when switching to QWEN_OAUTH.
-        if (authType !== AuthType.QWEN_OAUTH && credentials) {
+        // Only update credentials if not switching to DOCT_OAUTH,
+        // so that OpenAI credentials are preserved when switching to DOCT_OAUTH.
+        if (authType !== AuthType.DOCT_OAUTH && credentials) {
           if (credentials?.apiKey != null) {
             settings.setValue(
               authTypeScope,
@@ -274,8 +274,8 @@ export const useAuthCommand = (
   }, []);
 
   const cancelAuthentication = useCallback(() => {
-    if (isAuthenticating && pendingAuthType === AuthType.QWEN_OAUTH) {
-      cancelQwenAuth();
+    if (isAuthenticating && pendingAuthType === AuthType.DOCT_OAUTH) {
+      cancelDoctAuth();
     }
 
     // Log authentication cancellation
@@ -288,7 +288,7 @@ export const useAuthCommand = (
     setIsAuthenticating(false);
     setIsAuthDialogOpen(true);
     setAuthError(null);
-  }, [isAuthenticating, pendingAuthType, cancelQwenAuth, config]);
+  }, [isAuthenticating, pendingAuthType, cancelDoctAuth, config]);
 
   /**
    * Handle coding plan submission - generates configs from template and stores api-key
@@ -567,11 +567,11 @@ export const useAuthCommand = (
   useEffect(() => {
     const defaultAuthType =
       process.env['DOCT_DEFAULT_AUTH_TYPE'] ??
-      process.env['QWEN_DEFAULT_AUTH_TYPE'];
+      process.env['DOCT_DEFAULT_AUTH_TYPE'];
     if (
       defaultAuthType &&
       ![
-        AuthType.QWEN_OAUTH,
+        AuthType.DOCT_OAUTH,
         AuthType.USE_OPENAI,
         AuthType.USE_ANTHROPIC,
         AuthType.USE_GEMINI,
@@ -580,11 +580,11 @@ export const useAuthCommand = (
     ) {
       onAuthError(
         t(
-          'Invalid DOCT_DEFAULT_AUTH_TYPE/QWEN_DEFAULT_AUTH_TYPE value: "{{value}}". Valid values are: {{validValues}}',
+          'Invalid DOCT_DEFAULT_AUTH_TYPE/DOCT_DEFAULT_AUTH_TYPE value: "{{value}}". Valid values are: {{validValues}}',
           {
             value: defaultAuthType,
             validValues: [
-              AuthType.QWEN_OAUTH,
+              AuthType.DOCT_OAUTH,
               AuthType.USE_OPENAI,
               AuthType.USE_ANTHROPIC,
               AuthType.USE_GEMINI,
@@ -604,7 +604,7 @@ export const useAuthCommand = (
     isAuthDialogOpen,
     isAuthenticating,
     pendingAuthType,
-    qwenAuthState,
+    doctAuthState,
     handleAuthSelect,
     handleCodingPlanSubmit,
     handleAlibabaStandardSubmit,

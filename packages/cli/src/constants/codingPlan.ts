@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import { createHash } from 'node:crypto';
-import type { ProviderModelConfig as ModelConfig } from '@qwen-code/qwen-code-core';
+import type { ProviderModelConfig as ModelConfig } from '@doct-code/doct-code-core';
 
 /**
  * Coding plan regions
@@ -53,8 +53,8 @@ export function generateCodingPlanTemplate(
     // This ensures existing users don't get prompted for unnecessary updates
     return [
       {
-        id: 'qwen3.5-plus',
-        name: '[ModelStudio Coding Plan] qwen3.5-plus',
+        id: 'doct3.5-plus',
+        name: '[ModelStudio Coding Plan] doct3.5-plus',
         baseUrl: 'https://coding.dashscope.aliyuncs.com/v1',
         envKey: CODING_PLAN_ENV_KEY,
         generationConfig: {
@@ -65,8 +65,8 @@ export function generateCodingPlanTemplate(
         },
       },
       {
-        id: 'qwen3.6-plus',
-        name: '[ModelStudio Coding Plan] qwen3.6-plus',
+        id: 'doct3.6-plus',
+        name: '[ModelStudio Coding Plan] doct3.6-plus',
         description: 'Currently available to Pro subscribers only.',
         baseUrl: 'https://coding.dashscope.aliyuncs.com/v1',
         envKey: CODING_PLAN_ENV_KEY,
@@ -114,8 +114,8 @@ export function generateCodingPlanTemplate(
         },
       },
       {
-        id: 'qwen3-coder-plus',
-        name: '[ModelStudio Coding Plan] qwen3-coder-plus',
+        id: 'doct3-coder-plus',
+        name: '[ModelStudio Coding Plan] doct3-coder-plus',
         baseUrl: 'https://coding.dashscope.aliyuncs.com/v1',
         envKey: CODING_PLAN_ENV_KEY,
         generationConfig: {
@@ -123,8 +123,8 @@ export function generateCodingPlanTemplate(
         },
       },
       {
-        id: 'qwen3-coder-next',
-        name: '[ModelStudio Coding Plan] qwen3-coder-next',
+        id: 'doct3-coder-next',
+        name: '[ModelStudio Coding Plan] doct3-coder-next',
         baseUrl: 'https://coding.dashscope.aliyuncs.com/v1',
         envKey: CODING_PLAN_ENV_KEY,
         generationConfig: {
@@ -132,8 +132,8 @@ export function generateCodingPlanTemplate(
         },
       },
       {
-        id: 'qwen3-max-2026-01-23',
-        name: '[ModelStudio Coding Plan] qwen3-max-2026-01-23',
+        id: 'doct3-max-2026-01-23',
+        name: '[ModelStudio Coding Plan] doct3-max-2026-01-23',
         baseUrl: 'https://coding.dashscope.aliyuncs.com/v1',
         envKey: CODING_PLAN_ENV_KEY,
         generationConfig: {
@@ -161,8 +161,8 @@ export function generateCodingPlanTemplate(
   // Global region uses ModelStudio Coding Plan branding for Global/Intl
   return [
     {
-      id: 'qwen3.5-plus',
-      name: '[ModelStudio Coding Plan for Global/Intl] qwen3.5-plus',
+      id: 'doct3.5-plus',
+      name: '[ModelStudio Coding Plan for Global/Intl] doct3.5-plus',
       baseUrl: 'https://coding-intl.dashscope.aliyuncs.com/v1',
       envKey: CODING_PLAN_ENV_KEY,
       generationConfig: {
@@ -173,8 +173,8 @@ export function generateCodingPlanTemplate(
       },
     },
     {
-      id: 'qwen3.6-plus',
-      name: '[ModelStudio Coding Plan for Global/Intl] qwen3.6-plus',
+      id: 'doct3.6-plus',
+      name: '[ModelStudio Coding Plan for Global/Intl] doct3.6-plus',
       description: 'Currently available to Pro subscribers only.',
       baseUrl: 'https://coding-intl.dashscope.aliyuncs.com/v1',
       envKey: CODING_PLAN_ENV_KEY,
@@ -186,8 +186,8 @@ export function generateCodingPlanTemplate(
       },
     },
     {
-      id: 'qwen3-coder-plus',
-      name: '[ModelStudio Coding Plan for Global/Intl] qwen3-coder-plus',
+      id: 'doct3-coder-plus',
+      name: '[ModelStudio Coding Plan for Global/Intl] doct3-coder-plus',
       baseUrl: 'https://coding-intl.dashscope.aliyuncs.com/v1',
       envKey: CODING_PLAN_ENV_KEY,
       generationConfig: {
@@ -195,8 +195,8 @@ export function generateCodingPlanTemplate(
       },
     },
     {
-      id: 'qwen3-coder-next',
-      name: '[ModelStudio Coding Plan for Global/Intl] qwen3-coder-next',
+      id: 'doct3-coder-next',
+      name: '[ModelStudio Coding Plan for Global/Intl] doct3-coder-next',
       baseUrl: 'https://coding-intl.dashscope.aliyuncs.com/v1',
       envKey: CODING_PLAN_ENV_KEY,
       generationConfig: {
@@ -204,8 +204,8 @@ export function generateCodingPlanTemplate(
       },
     },
     {
-      id: 'qwen3-max-2026-01-23',
-      name: '[ModelStudio Coding Plan for Global/Intl] qwen3-max-2026-01-23',
+      id: 'doct3-max-2026-01-23',
+      name: '[ModelStudio Coding Plan for Global/Intl] doct3-max-2026-01-23',
       baseUrl: 'https://coding-intl.dashscope.aliyuncs.com/v1',
       envKey: CODING_PLAN_ENV_KEY,
       generationConfig: {

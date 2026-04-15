@@ -1,13 +1,13 @@
 /**
  * @license
- * Copyright 2025 Qwen Code
+ * Copyright 2025 Doct Code
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import path from 'path';
 import open from 'open';
-import { Storage } from '@qwen-code/qwen-code-core';
+import { Storage } from '@doct-code/doct-code-core';
 import { insightCommand } from './insightCommand.js';
 import type { CommandContext } from './types.js';
 import { createMockCommandContext } from '../../test-utils/mockCommandContext.js';

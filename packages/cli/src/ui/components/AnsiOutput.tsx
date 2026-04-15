@@ -10,7 +10,7 @@ import type {
   AnsiLine,
   AnsiOutput,
   AnsiToken,
-} from '@qwen-code/qwen-code-core';
+} from '@doct-code/doct-code-core';
 
 const DEFAULT_HEIGHT = 24;
 

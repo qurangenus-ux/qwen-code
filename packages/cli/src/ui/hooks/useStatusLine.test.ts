@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen
+ * Copyright 2025 Doct
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -55,9 +55,9 @@ vi.mock('../contexts/VimModeContext.js', () => ({
   useVimMode: () => mockVimMode,
 }));
 
-vi.mock('@qwen-code/qwen-code-core', async (importOriginal) => {
+vi.mock('@doct-code/doct-code-core', async (importOriginal) => {
   const original =
-    await importOriginal<typeof import('@qwen-code/qwen-code-core')>();
+    await importOriginal<typeof import('@doct-code/doct-code-core')>();
   return {
     ...original,
     createDebugLogger: () => ({

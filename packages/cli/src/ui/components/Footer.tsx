@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen
+ * Copyright 2025 Doct
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -18,7 +18,7 @@ import { useUIState } from '../contexts/UIStateContext.js';
 import { useConfig } from '../contexts/ConfigContext.js';
 import { useVimMode } from '../contexts/VimModeContext.js';
 import { useCompactMode } from '../contexts/CompactModeContext.js';
-import { ApprovalMode } from '@qwen-code/qwen-code-core';
+import { ApprovalMode } from '@doct-code/doct-code-core';
 import { t } from '../../i18n/index.js';
 
 export const Footer: React.FC = () => {
@@ -41,7 +41,7 @@ export const Footer: React.FC = () => {
   const sandboxInfo = sandboxEnv
     ? sandboxEnv === 'sandbox-exec'
       ? 'seatbelt'
-      : sandboxEnv.startsWith('qwen-code')
+      : sandboxEnv.startsWith('doct-code')
         ? 'docker'
         : sandboxEnv
     : null;

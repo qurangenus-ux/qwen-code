@@ -1,11 +1,11 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
- * Browser-safe subset of @qwen-code/qwen-code-core tokenLimits.
+ * Browser-safe subset of @doct-code/doct-code-core tokenLimits.
  *
  * The webview bundle (IIFE, platform: browser) cannot `require` Node.js
  * packages. This module replicates the constants and logic the webview
@@ -73,7 +73,7 @@ function normalize(model: string): string {
   s = s.replace(/-preview/g, '');
 
   if (
-    !s.match(/^qwen-(?:plus|flash|vl-max)-latest$/) &&
+    !s.match(/^doct-(?:plus|flash|vl-max)-latest$/) &&
     !s.match(/^kimi-k2-\d{4}$/)
   ) {
     s = s.replace(
@@ -103,16 +103,16 @@ const INPUT_PATTERNS: Array<[RegExp, TokenCount]> = [
   // Anthropic Claude
   [/^claude-/, LIMITS['200k']],
 
-  // Alibaba / Qwen
-  [/^qwen3-coder-plus/, LIMITS['1m']],
-  [/^qwen3-coder-flash/, LIMITS['1m']],
-  [/^qwen3\.\d/, LIMITS['1m']],
-  [/^qwen-plus-latest$/, LIMITS['1m']],
-  [/^qwen-flash-latest$/, LIMITS['1m']],
+  // Alibaba / Doct
+  [/^doct3-coder-plus/, LIMITS['1m']],
+  [/^doct3-coder-flash/, LIMITS['1m']],
+  [/^doct3\.\d/, LIMITS['1m']],
+  [/^doct-plus-latest$/, LIMITS['1m']],
+  [/^doct-flash-latest$/, LIMITS['1m']],
   [/^coder-model$/, LIMITS['1m']],
-  [/^qwen3-max/, LIMITS['256k']],
-  [/^qwen3-coder-/, LIMITS['256k']],
-  [/^qwen/, LIMITS['256k']],
+  [/^doct3-max/, LIMITS['256k']],
+  [/^doct3-coder-/, LIMITS['256k']],
+  [/^doct/, LIMITS['256k']],
 
   // DeepSeek
   [/^deepseek/, LIMITS['128k']],
@@ -148,9 +148,9 @@ const OUTPUT_PATTERNS: Array<[RegExp, TokenCount]> = [
   [/^claude-sonnet-4-6/, LIMITS['64k']],
   [/^claude-/, LIMITS['64k']],
 
-  [/^qwen3\.\d/, LIMITS['64k']],
+  [/^doct3\.\d/, LIMITS['64k']],
   [/^coder-model$/, LIMITS['64k']],
-  [/^qwen/, LIMITS['32k']],
+  [/^doct/, LIMITS['32k']],
 
   [/^deepseek-reasoner/, LIMITS['64k']],
   [/^deepseek-r1/, LIMITS['64k']],
@@ -172,7 +172,7 @@ const OUTPUT_PATTERNS: Array<[RegExp, TokenCount]> = [
  * Return the token limit for a given model name.
  *
  * This is a browser-safe mirror of `tokenLimit()` in
- * `@qwen-code/qwen-code-core`. The webview only calls this as a fallback
+ * `@doct-code/doct-code-core`. The webview only calls this as a fallback
  * when `modelInfo._meta.contextLimit` is unavailable.
  *
  * @param model - The model identifier string

@@ -1,8 +1,8 @@
-# Qwen Code Hooks Documentation
+# Doct Code Hooks Documentation
 
 ## Overview
 
-Qwen Code hooks provide a powerful mechanism for extending and customizing the behavior of the Qwen Code application. Hooks allow users to execute custom scripts or programs at specific points in the application lifecycle, such as before tool execution, after tool execution, at session start/end, and during other key events.
+Doct Code hooks provide a powerful mechanism for extending and customizing the behavior of the Doct Code application. Hooks allow users to execute custom scripts or programs at specific points in the application lifecycle, such as before tool execution, after tool execution, at session start/end, and during other key events.
 
 Hooks are enabled by default. You can temporarily disable all hooks by setting `disableAllHooks` to `true` in your settings file (at the top level, alongside `hooks`):
 
@@ -19,7 +19,7 @@ This disables all hooks without deleting their configurations.
 
 ## What are Hooks?
 
-Hooks are user-defined scripts or programs that are automatically executed by Qwen Code at predefined points in the application flow. They allow users to:
+Hooks are user-defined scripts or programs that are automatically executed by Doct Code at predefined points in the application flow. They allow users to:
 
 - Monitor and audit tool usage
 - Enforce security policies
@@ -30,7 +30,7 @@ Hooks are user-defined scripts or programs that are automatically executed by Qw
 
 ## Hook Architecture
 
-The Qwen Code hook system consists of several key components:
+The Doct Code hook system consists of several key components:
 
 1. **Hook Registry**: Stores and manages all configured hooks
 2. **Hook Planner**: Determines which hooks should run for each event
@@ -40,13 +40,13 @@ The Qwen Code hook system consists of several key components:
 
 ## Hook Events
 
-Hooks fire at specific points during a Qwen Code session. When an event fires and a matcher matches, Qwen Code passes JSON context about the event to your hook handler. For command hooks, input arrives on stdin. Your handler can inspect the input, take action, and optionally return a decision. Some events fire once per session, while others fire repeatedly inside the agentic loop.
+Hooks fire at specific points during a Doct Code session. When an event fires and a matcher matches, Doct Code passes JSON context about the event to your hook handler. For command hooks, input arrives on stdin. Your handler can inspect the input, take action, and optionally return a decision. Some events fire once per session, while others fire repeatedly inside the agentic loop.
 
 <div align="center">
 <img src="https://img.alicdn.com/imgextra/i4/O1CN01sYWUTh1RDJl7Lz2ne_!!6000000002077-2-tps-812-1212.png" alt="Hook Lifecycle Diagram" width="400"/>
 </div>
 
-The following table lists all available hook events in Qwen Code:
+The following table lists all available hook events in Doct Code:
 
 | Event Name           | Description                                 | Use Case                                        |
 | -------------------- | ------------------------------------------- | ----------------------------------------------- |
@@ -56,7 +56,7 @@ The following table lists all available hook events in Qwen Code:
 | `Notification`       | Fired when notifications are sent           | Notification customization, logging             |
 | `UserPromptSubmit`   | Fired when user submits a prompt            | Input processing, validation, context injection |
 | `SessionStart`       | Fired when a new session starts             | Initialization, context setup                   |
-| `Stop`               | Fired before Qwen concludes its response    | Finalization, cleanup                           |
+| `Stop`               | Fired before Doct concludes its response    | Finalization, cleanup                           |
 | `StopFailure`        | Fired when turn ends due to API error       | Error logging, alerting, rate limit handling    |
 | `SubagentStart`      | Fired when a subagent starts                | Subagent initialization                         |
 | `SubagentStop`       | Fired when a subagent stops                 | Subagent finalization                           |
@@ -271,7 +271,7 @@ Event-specific fields are added based on the hook type. Below are the event-spec
 
 #### Stop
 
-**Purpose**: Executed before Qwen concludes its response to provide final feedback or summaries.
+**Purpose**: Executed before Doct concludes its response to provide final feedback or summaries.
 
 **Event-specific fields**:
 
@@ -297,7 +297,7 @@ Event-specific fields are added based on the hook type. Below are the event-spec
 ```json
 {
   "decision": "block",
-  "reason": "Must be provided when Qwen Code is blocked from stopping"
+  "reason": "Must be provided when Doct Code is blocked from stopping"
 }
 ```
 
@@ -411,7 +411,7 @@ Event-specific fields are added based on the hook type. Below are the event-spec
 ```json
 {
   "decision": "block",
-  "reason": "Must be provided when Qwen Code is blocked from stopping"
+  "reason": "Must be provided when Doct Code is blocked from stopping"
 }
 ```
 
@@ -571,7 +571,7 @@ Event-specific fields are added based on the hook type. Below are the event-spec
 
 ## Hook Configuration
 
-Hooks are configured in Qwen Code settings, typically in `.qwen/settings.json` or user configuration files:
+Hooks are configured in Doct Code settings, typically in `.doct/settings.json` or user configuration files:
 
 ```json
 {
@@ -735,7 +735,7 @@ if echo "$TOOL_INPUT" | grep -qiE "(rm.*-rf|mv.*\/|chmod.*777)"; then
 fi
 
 # Allow the operation with a log
-echo "INFO: Tool $TOOL_NAME executed safely at $(date)" >> /var/log/qwen-security.log
+echo "INFO: Tool $TOOL_NAME executed safely at $(date)" >> /var/log/doct-security.log
 
 # Allow with additional context
 echo '{
@@ -751,7 +751,7 @@ echo '{
 exit 0
 ```
 
-Configure in `.qwen/settings.json`:
+Configure in `.doct/settings.json`:
 
 ```json
 {

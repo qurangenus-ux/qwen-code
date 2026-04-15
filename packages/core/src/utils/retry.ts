@@ -6,7 +6,7 @@
 
 import type { GenerateContentResponse } from '@google/genai';
 import { AuthType } from '../core/contentGenerator.js';
-import { isQwenQuotaExceededError } from './quotaErrorDetection.js';
+import { isDoctQuotaExceededError } from './quotaErrorDetection.js';
 import { createDebugLogger } from './debugLogger.js';
 import { getErrorStatus } from './errors.js';
 
@@ -108,11 +108,11 @@ export async function retryWithBackoff<T>(
     } catch (error) {
       const errorStatus = getErrorStatus(error);
 
-      // Check for Qwen OAuth quota exceeded error - throw immediately without retry
-      if (authType === AuthType.QWEN_OAUTH && isQwenQuotaExceededError(error)) {
+      // Check for Doct OAuth quota exceeded error - throw immediately without retry
+      if (authType === AuthType.DOCT_OAUTH && isDoctQuotaExceededError(error)) {
         throw new Error(
-          `Qwen OAuth free tier quota exceeded. Note: Qwen OAuth free tier will be discontinued on 2026-04-15.\n\n` +
-            `To continue using Qwen Code, try one of these alternatives:\n` +
+          `Doct OAuth free tier quota exceeded. Note: Doct OAuth free tier will be discontinued on 2026-04-15.\n\n` +
+            `To continue using Doct Code, try one of these alternatives:\n` +
             `  - OpenRouter:    https://openrouter.ai/docs/quickstart\n` +
             `  - Fireworks AI:  https://docs.fireworks.ai/api-reference/introduction\n` +
             `  - ModelStudio:   https://help.aliyun.com/zh/model-studio/coding-plan\n\n` +

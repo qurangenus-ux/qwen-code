@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -34,8 +34,8 @@ describe('computeContextUsage', () => {
           tokenLimit: 4000,
         },
         {
-          modelId: 'qwen3-max',
-          name: 'Qwen3 Max',
+          modelId: 'doct3-max',
+          name: 'Doct3 Max',
           _meta: { contextLimit: 8000 },
         },
       ),
@@ -55,8 +55,8 @@ describe('computeContextUsage', () => {
           },
         },
         {
-          modelId: 'qwen3-max',
-          name: 'Qwen3 Max',
+          modelId: 'doct3-max',
+          name: 'Doct3 Max',
           _meta: { contextLimit: 8000 },
         },
       ),

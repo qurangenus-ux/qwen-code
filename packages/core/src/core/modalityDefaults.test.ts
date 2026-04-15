@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -105,42 +105,42 @@ describe('defaultModalities', () => {
     });
   });
 
-  describe('Qwen', () => {
-    it('returns image + video for qwen-vl-max', () => {
-      const m = defaultModalities('qwen-vl-max');
+  describe('Doct', () => {
+    it('returns image + video for doct-vl-max', () => {
+      const m = defaultModalities('doct-vl-max');
       expect(m.image).toBe(true);
       expect(m.video).toBe(true);
       expect(m.pdf).toBeUndefined();
       expect(m.audio).toBeUndefined();
     });
 
-    it('returns image + video for qwen3-vl-plus', () => {
-      const m = defaultModalities('qwen3-vl-plus');
+    it('returns image + video for doct3-vl-plus', () => {
+      const m = defaultModalities('doct3-vl-plus');
       expect(m.image).toBe(true);
       expect(m.video).toBe(true);
     });
 
-    it('returns text-only for qwen3-coder-plus', () => {
-      expect(defaultModalities('qwen3-coder-plus')).toEqual({});
+    it('returns text-only for doct3-coder-plus', () => {
+      expect(defaultModalities('doct3-coder-plus')).toEqual({});
     });
 
-    it('returns image + video for coder-model (same as qwen3.5-plus)', () => {
+    it('returns image + video for coder-model (same as doct3.5-plus)', () => {
       expect(defaultModalities('coder-model')).toEqual({
         image: true,
         video: true,
       });
     });
 
-    it('returns image + video for qwen3.5-plus', () => {
-      const m = defaultModalities('qwen3.5-plus');
+    it('returns image + video for doct3.5-plus', () => {
+      const m = defaultModalities('doct3.5-plus');
       expect(m.image).toBe(true);
       expect(m.video).toBe(true);
       expect(m.pdf).toBeUndefined();
       expect(m.audio).toBeUndefined();
     });
 
-    it('returns text-only for qwen-turbo', () => {
-      expect(defaultModalities('qwen-turbo')).toEqual({});
+    it('returns text-only for doct-turbo', () => {
+      expect(defaultModalities('doct-turbo')).toEqual({});
     });
   });
 

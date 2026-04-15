@@ -1,13 +1,13 @@
 /**
  * @license
- * Copyright 2025 Qwen
+ * Copyright 2025 Doct
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BundledSkillLoader } from './BundledSkillLoader.js';
 import { CommandKind } from '../ui/commands/types.js';
-import type { Config, SkillConfig } from '@qwen-code/qwen-code-core';
+import type { Config, SkillConfig } from '@doct-code/doct-code-core';
 
 function makeSkill(overrides: Partial<SkillConfig> = {}): SkillConfig {
   return {
@@ -130,11 +130,11 @@ describe('BundledSkillLoader', () => {
 
   it('should resolve {{model}} template variable in skill body', async () => {
     const skill = makeSkill({
-      body: 'Review by {{model}} via Qwen Code',
+      body: 'Review by {{model}} via Doct Code',
     });
     mockSkillManager.listSkills.mockResolvedValue([skill]);
     (mockConfig.getModel as ReturnType<typeof vi.fn>).mockReturnValue(
-      'qwen3-coder',
+      'doct3-coder',
     );
 
     const loader = new BundledSkillLoader(mockConfig);
@@ -148,7 +148,7 @@ describe('BundledSkillLoader', () => {
       type: 'submit_prompt',
       content: [
         {
-          text: 'YOUR_MODEL_ID="qwen3-coder"\n\nReview by qwen3-coder via Qwen Code',
+          text: 'YOUR_MODEL_ID="doct3-coder"\n\nReview by doct3-coder via Doct Code',
         },
       ],
     });
@@ -180,7 +180,7 @@ describe('BundledSkillLoader', () => {
     });
     mockSkillManager.listSkills.mockResolvedValue([skill]);
     (mockConfig.getModel as ReturnType<typeof vi.fn>).mockReturnValue(
-      'qwen3-coder',
+      'doct3-coder',
     );
 
     const loader = new BundledSkillLoader(mockConfig);
@@ -194,7 +194,7 @@ describe('BundledSkillLoader', () => {
       type: 'submit_prompt',
       content: [
         {
-          text: 'YOUR_MODEL_ID="qwen3-coder"\n\nReview by qwen3-coder\n\n/review 123',
+          text: 'YOUR_MODEL_ID="doct3-coder"\n\nReview by doct3-coder\n\n/review 123',
         },
       ],
     });

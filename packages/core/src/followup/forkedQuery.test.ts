@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -35,11 +35,11 @@ describe('CacheSafeParams', () => {
         tools: [{ functionDeclarations: [] }],
       };
 
-      saveCacheSafeParams(config, [], 'qwen-max');
+      saveCacheSafeParams(config, [], 'doct-max');
 
       const params = getCacheSafeParams();
       expect(params).not.toBeNull();
-      expect(params!.model).toBe('qwen-max');
+      expect(params!.model).toBe('doct-max');
       expect(params!.history).toEqual([]);
       expect(params!.version).toBeGreaterThan(0);
     });

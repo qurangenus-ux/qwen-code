@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen
+ * Copyright 2025 Doct
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,7 +13,7 @@ import type {
   WebSearchResultItem,
   DashScopeProviderConfig,
 } from '../types.js';
-import type { QwenCredentials } from '../../../qwen/qwenOAuth2.js';
+import type { DoctCredentials } from '../../../doct/doctOAuth2.js';
 
 interface DashScopeSearchItem {
   _id: string;
@@ -59,24 +59,24 @@ interface DashScopeSearchResponse {
 }
 
 // File System Configuration
-const QWEN_DIR = '.qwen';
-const QWEN_CREDENTIAL_FILENAME = 'oauth_creds.json';
+const DOCT_DIR = '.doct';
+const DOCT_CREDENTIAL_FILENAME = 'oauth_creds.json';
 
 /**
  * Get the path to the cached OAuth credentials file.
  */
-function getQwenCachedCredentialPath(): string {
-  return path.join(os.homedir(), QWEN_DIR, QWEN_CREDENTIAL_FILENAME);
+function getDoctCachedCredentialPath(): string {
+  return path.join(os.homedir(), DOCT_DIR, DOCT_CREDENTIAL_FILENAME);
 }
 
 /**
- * Load cached Qwen OAuth credentials from disk.
+ * Load cached Doct OAuth credentials from disk.
  */
-async function loadQwenCredentials(): Promise<QwenCredentials | null> {
+async function loadDoctCredentials(): Promise<DoctCredentials | null> {
   try {
-    const keyFile = getQwenCachedCredentialPath();
+    const keyFile = getDoctCachedCredentialPath();
     const creds = await fs.readFile(keyFile, 'utf-8');
-    return JSON.parse(creds) as QwenCredentials;
+    return JSON.parse(creds) as DoctCredentials;
   } catch {
     return null;
   }
@@ -93,9 +93,9 @@ export class DashScopeProvider extends BaseWebSearchProvider {
   }
 
   isAvailable(): boolean {
-    // DashScope provider is only available when auth type is QWEN_OAUTH
+    // DashScope provider is only available when auth type is DOCT_OAUTH
     // This ensures it's only used when OAuth credentials are available
-    return this.config.authType === 'qwen-oauth';
+    return this.config.authType === 'doct-oauth';
   }
 
   /**
@@ -108,7 +108,7 @@ export class DashScopeProvider extends BaseWebSearchProvider {
     apiEndpoint: string;
   }> {
     // Load credentials once
-    const credentials = await loadQwenCredentials();
+    const credentials = await loadDoctCredentials();
 
     // Get access token: try OAuth credentials first, fallback to apiKey
     let accessToken: string | null = null;

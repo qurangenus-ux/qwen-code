@@ -1,10 +1,10 @@
 {
-  "name": "@qwen-code/qwen-code-core",
+  "name": "@doct-code/doct-code-core",
   "version": "0.14.4",
-  "description": "Qwen Code Core",
+  "description": "Doct Code Core",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/QwenLM/qwen-code.git"
+    "url": "git+https://github.com/DoctLM/doct-code.git"
   },
   "type": "module",
   "main": "dist/index.js",

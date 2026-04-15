@@ -5,7 +5,7 @@
  */
 
 import { Box } from 'ink';
-import { AuthType } from '@qwen-code/qwen-code-core';
+import { AuthType } from '@doct-code/doct-code-core';
 import { Header, AuthDisplayType } from './Header.js';
 import { Tips } from './Tips.js';
 import { useSettings } from '../contexts/SettingsContext.js';
@@ -35,8 +35,8 @@ function getAuthDisplayType(
   }
 
   switch (authType) {
-    case AuthType.QWEN_OAUTH:
-      return AuthDisplayType.QWEN_OAUTH;
+    case AuthType.DOCT_OAUTH:
+      return AuthDisplayType.DOCT_OAUTH;
     default:
       return AuthDisplayType.API_KEY;
   }

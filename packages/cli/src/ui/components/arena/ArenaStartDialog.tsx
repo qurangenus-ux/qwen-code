@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -8,7 +8,7 @@ import type React from 'react';
 import { useMemo, useState } from 'react';
 import { Box, Text } from 'ink';
 import Link from 'ink-link';
-import { AuthType } from '@qwen-code/qwen-code-core';
+import { AuthType } from '@doct-code/doct-code-core';
 import { useConfig } from '../../contexts/ConfigContext.js';
 import { theme } from '../../semantic-colors.js';
 import { useKeypress } from '../../hooks/useKeypress.js';
@@ -21,7 +21,7 @@ interface ArenaStartDialogProps {
 }
 
 const MODEL_PROVIDERS_DOCUMENTATION_URL =
-  'https://qwenlm.github.io/qwen-code-docs/en/users/configuration/settings/#modelproviders';
+  'https://doctlm.github.io/doct-code-docs/en/users/configuration/settings/#modelproviders';
 
 export function ArenaStartDialog({
   onClose,
@@ -36,16 +36,16 @@ export function ArenaStartDialog({
 
     return selectableModels.map((model) => {
       const token = `${model.authType}:${model.id}`;
-      const isQwenOauth = model.authType === AuthType.QWEN_OAUTH;
+      const isDoctOauth = model.authType === AuthType.DOCT_OAUTH;
       return {
         key: token,
         value: token,
         label: `[${model.authType}] ${model.label}`,
-        disabled: isQwenOauth,
+        disabled: isDoctOauth,
       };
     });
   }, [config]);
-  const hasDisabledQwenOauth = modelItems.some((item) => item.disabled);
+  const hasDisabledDoctOauth = modelItems.some((item) => item.disabled);
   const selectableModelCount = modelItems.filter(
     (item) => !item.disabled,
   ).length;
@@ -109,11 +109,11 @@ export function ArenaStartDialog({
         </Box>
       )}
 
-      {(hasDisabledQwenOauth || needsMoreModels) && (
+      {(hasDisabledDoctOauth || needsMoreModels) && (
         <Box marginTop={1} flexDirection="column">
-          {hasDisabledQwenOauth && (
+          {hasDisabledDoctOauth && (
             <Text color={theme.status.warning}>
-              {t('Note: qwen-oauth models are not supported in Arena.')}
+              {t('Note: doct-oauth models are not supported in Arena.')}
             </Text>
           )}
           {needsMoreModels && (

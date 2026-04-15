@@ -54,7 +54,7 @@ export interface ContentGenerator {
 
 export enum AuthType {
   USE_OPENAI = 'openai',
-  QWEN_OAUTH = 'qwen-oauth',
+  DOCT_OAUTH = 'doct-oauth',
   USE_GEMINI = 'gemini',
   USE_VERTEX_AI = 'vertex-ai',
   USE_ANTHROPIC = 'anthropic',
@@ -221,8 +221,8 @@ export function validateModelConfig(
 ): ModelConfigValidationResult {
   const errors: Error[] = [];
 
-  // Qwen OAuth doesn't need validation - it uses dynamic tokens
-  if (config.authType === AuthType.QWEN_OAUTH) {
+  // Doct OAuth doesn't need validation - it uses dynamic tokens
+  if (config.authType === AuthType.DOCT_OAUTH) {
     return { valid: true, errors: [] };
   }
 
@@ -311,21 +311,21 @@ export async function createContentGenerator(
       './openaiContentGenerator/index.js'
     );
     baseGenerator = createOpenAIContentGenerator(generatorConfig, config);
-  } else if (authType === AuthType.QWEN_OAUTH) {
-    const { getQwenOAuthClient: getQwenOauthClient } = await import(
-      '../qwen/qwenOAuth2.js'
+  } else if (authType === AuthType.DOCT_OAUTH) {
+    const { getDoctOAuthClient: getDoctOauthClient } = await import(
+      '../doct/doctOAuth2.js'
     );
-    const { QwenContentGenerator } = await import(
-      '../qwen/qwenContentGenerator.js'
+    const { DoctContentGenerator } = await import(
+      '../doct/doctContentGenerator.js'
     );
 
     try {
-      const qwenClient = await getQwenOauthClient(
+      const doctClient = await getDoctOauthClient(
         config,
         isInitialAuth ? { requireCachedCredentials: true } : undefined,
       );
-      baseGenerator = new QwenContentGenerator(
-        qwenClient,
+      baseGenerator = new DoctContentGenerator(
+        doctClient,
         generatorConfig,
         config,
       );

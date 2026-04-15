@@ -1,12 +1,12 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import * as vscode from 'vscode';
 import { BaseMessageHandler } from './BaseMessageHandler.js';
-import type { ChatMessage } from '../../services/qwenAgentManager.js';
+import type { ChatMessage } from '../../services/doctAgentManager.js';
 import type { ImageAttachment } from '../../utils/imageSupport.js';
 import type { ApprovalModeValue } from '../../types/approvalModeValueTypes.js';
 import {
@@ -28,9 +28,9 @@ export class SessionMessageHandler extends BaseMessageHandler {
   canHandle(messageType: string): boolean {
     return [
       'sendMessage',
-      'newQwenSession',
-      'switchQwenSession',
-      'getQwenSessions',
+      'newDoctSession',
+      'switchDoctSession',
+      'getDoctSessions',
       'resumeSession',
       'cancelStreaming',
       // UI action: open a new chat tab (new WebviewPanel)
@@ -76,16 +76,16 @@ export class SessionMessageHandler extends BaseMessageHandler {
         );
         break;
 
-      case 'newQwenSession':
-        await this.handleNewQwenSession();
+      case 'newDoctSession':
+        await this.handleNewDoctSession();
         break;
 
-      case 'switchQwenSession':
-        await this.handleSwitchQwenSession((data?.sessionId as string) || '');
+      case 'switchDoctSession':
+        await this.handleSwitchDoctSession((data?.sessionId as string) || '');
         break;
 
-      case 'getQwenSessions':
-        await this.handleGetQwenSessions(
+      case 'getDoctSessions':
+        await this.handleGetDoctSessions(
           (data?.cursor as number | undefined) ?? undefined,
           (data?.size as number | undefined) ?? undefined,
         );
@@ -104,7 +104,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
             typeof data?.modelId === 'string' && data.modelId.trim().length > 0
               ? data.modelId.trim()
               : undefined;
-          await vscode.commands.executeCommand('qwenCode.openNewChatTab', {
+          await vscode.commands.executeCommand('doctCode.openNewChatTab', {
             initialModelId: modelId,
           });
         } catch (error) {
@@ -232,7 +232,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
       if (this.loginHandler) {
         await this.loginHandler();
       } else {
-        await vscode.commands.executeCommand('qwen-code.login');
+        await vscode.commands.executeCommand('doct-code.login');
       }
       return true;
     }
@@ -256,7 +256,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
       if (this.loginHandler) {
         await this.loginHandler();
       } else {
-        await vscode.commands.executeCommand('qwen-code.login');
+        await vscode.commands.executeCommand('doct-code.login');
       }
       return 'login';
     }
@@ -425,7 +425,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
       console.warn('[SessionMessageHandler] Agent not connected');
 
       // Show non-modal notification with Login button
-      await this.promptLogin('You need to login first to use Qwen Code.');
+      await this.promptLogin('You need to login first to use Doct Code.');
       return;
     }
 
@@ -443,7 +443,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
         const errorMsg = this.getErrorMessage(createErr);
         if (this.shouldPromptLogin(createErr)) {
           await this.promptLogin(
-            'Your login session has expired or is invalid. Please login again to continue using Qwen Code.',
+            'Your login session has expired or is invalid. Please login again to continue using Doct Code.',
           );
           return;
         }
@@ -526,7 +526,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
       ) {
         // Show a more user-friendly error message for expired sessions
         await this.promptLogin(
-          'Your login session has expired or is invalid. Please login again to continue using Qwen Code.',
+          'Your login session has expired or is invalid. Please login again to continue using Doct Code.',
         );
 
         // Send a specific error to the webview for better UI handling
@@ -572,11 +572,11 @@ export class SessionMessageHandler extends BaseMessageHandler {
   }
 
   /**
-   * Handle new Qwen session request
+   * Handle new Doct session request
    */
-  private async handleNewQwenSession(): Promise<void> {
+  private async handleNewDoctSession(): Promise<void> {
     try {
-      console.log('[SessionMessageHandler] Creating new Qwen session...');
+      console.log('[SessionMessageHandler] Creating new Doct session...');
 
       // Ensure connection (login) before creating a new session
       if (!this.agentManager.isConnected) {
@@ -631,9 +631,9 @@ export class SessionMessageHandler extends BaseMessageHandler {
   }
 
   /**
-   * Handle switch Qwen session request
+   * Handle switch Doct session request
    */
-  private async handleSwitchQwenSession(sessionId: string): Promise<void> {
+  private async handleSwitchDoctSession(sessionId: string): Promise<void> {
     try {
       console.log('[SessionMessageHandler] Switching to session:', sessionId);
 
@@ -649,7 +649,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
             await this.agentManager.getSessionMessages(sessionId);
           this.currentConversationId = sessionId;
           this.sendToWebView({
-            type: 'qwenSessionSwitched',
+            type: 'doctSessionSwitched',
             data: { sessionId, messages },
           });
           vscode.window.showInformationMessage(
@@ -686,7 +686,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
         // Set current id and clear UI first so replayed updates append afterwards
         this.currentConversationId = sessionId;
         this.sendToWebView({
-          type: 'qwenSessionSwitched',
+          type: 'doctSessionSwitched',
           data: { sessionId, messages: [], session: sessionDetails },
         });
 
@@ -741,7 +741,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
             this.currentConversationId = newAcpSessionId;
 
             this.sendToWebView({
-              type: 'qwenSessionSwitched',
+              type: 'doctSessionSwitched',
               data: { sessionId, messages, session: sessionDetails },
             });
 
@@ -785,7 +785,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
           // Offline view only
           this.currentConversationId = sessionId;
           this.sendToWebView({
-            type: 'qwenSessionSwitched',
+            type: 'doctSessionSwitched',
             data: { sessionId, messages, session: sessionDetails },
           });
           vscode.window.showWarningMessage(
@@ -820,9 +820,9 @@ export class SessionMessageHandler extends BaseMessageHandler {
   }
 
   /**
-   * Handle get Qwen sessions request
+   * Handle get Doct sessions request
    */
-  private async handleGetQwenSessions(
+  private async handleGetDoctSessions(
     cursor?: number,
     size?: number,
   ): Promise<void> {
@@ -834,7 +834,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
       });
       const append = typeof cursor === 'number';
       this.sendToWebView({
-        type: 'qwenSessionList',
+        type: 'doctSessionList',
         data: {
           sessions: page.sessions,
           nextCursor: page.nextCursor,
@@ -906,7 +906,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
             await this.agentManager.getSessionMessages(sessionId);
           this.currentConversationId = sessionId;
           this.sendToWebView({
-            type: 'qwenSessionSwitched',
+            type: 'doctSessionSwitched',
             data: { sessionId, messages },
           });
           vscode.window.showInformationMessage(
@@ -923,7 +923,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
         // Pre-clear UI so replayed updates append afterwards
         this.currentConversationId = sessionId;
         this.sendToWebView({
-          type: 'qwenSessionSwitched',
+          type: 'doctSessionSwitched',
           data: { sessionId, messages: [] },
         });
 
@@ -933,7 +933,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
         this.isTitleSet = false;
 
         // Successfully loaded session, return early to avoid fallback logic
-        await this.handleGetQwenSessions();
+        await this.handleGetDoctSessions();
         return;
       } catch (acpError) {
         // Check for authentication/session expiration errors
@@ -952,7 +952,7 @@ export class SessionMessageHandler extends BaseMessageHandler {
         }
       }
 
-      await this.handleGetQwenSessions();
+      await this.handleGetDoctSessions();
     } catch (error) {
       console.error('[SessionMessageHandler] Failed to resume session:', error);
 

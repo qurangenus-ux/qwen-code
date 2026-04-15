@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen
+ * Copyright 2025 Doct
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -32,7 +32,7 @@ describe('getAboutSystemInfoFields', () => {
     const labels = fields.map((f) => f.label);
 
     expect(labels).toEqual([
-      'Qwen Code',
+      'Doct Code',
       'Runtime',
       'IDE Client',
       'OS',

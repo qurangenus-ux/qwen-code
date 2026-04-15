@@ -6,7 +6,7 @@
 
 import type React from 'react';
 import { useState } from 'react';
-import { AuthType } from '@qwen-code/qwen-code-core';
+import { AuthType } from '@doct-code/doct-code-core';
 import { Box, Text } from 'ink';
 import Link from 'ink-link';
 import { theme } from '../semantic-colors.js';
@@ -28,7 +28,7 @@ import {
 } from '../../constants/alibabaStandardApiKey.js';
 
 const MODEL_PROVIDERS_DOCUMENTATION_URL =
-  'https://qwenlm.github.io/qwen-code-docs/en/users/configuration/model-providers/';
+  'https://doctlm.github.io/doct-code-docs/en/users/configuration/model-providers/';
 
 function parseDefaultAuthType(
   defaultAuthType: string | undefined,
@@ -43,7 +43,7 @@ function parseDefaultAuthType(
 }
 
 // Main menu option type
-type MainOption = typeof AuthType.QWEN_OAUTH | 'CODING_PLAN' | 'API_KEY';
+type MainOption = typeof AuthType.DOCT_OAUTH | 'CODING_PLAN' | 'API_KEY';
 type ApiKeyOption = 'ALIBABA_STANDARD_API_KEY' | 'CUSTOM_API_KEY';
 
 // View level for navigation
@@ -57,7 +57,7 @@ type ViewLevel =
   | 'alibaba-standard-model-id-input'
   | 'custom-info';
 
-const ALIBABA_STANDARD_MODEL_IDS_PLACEHOLDER = 'qwen3.5-plus,glm-5,kimi-k2.5';
+const ALIBABA_STANDARD_MODEL_IDS_PLACEHOLDER = 'doct3.5-plus,glm-5,kimi-k2.5';
 const ALIBABA_STANDARD_API_DOCUMENTATION_URLS: Record<
   AlibabaStandardRegion,
   string
@@ -119,11 +119,11 @@ export function AuthDialog(): React.JSX.Element {
       value: 'CODING_PLAN' as MainOption,
     },
     {
-      key: AuthType.QWEN_OAUTH,
-      title: t('Qwen OAuth'),
-      label: t('Qwen OAuth'),
+      key: AuthType.DOCT_OAUTH,
+      title: t('Doct OAuth'),
+      label: t('Doct OAuth'),
       description: t('Free \u00B7 100 requests/day \u00B7 Ending 2026-04-15'),
-      value: AuthType.QWEN_OAUTH as MainOption,
+      value: AuthType.DOCT_OAUTH as MainOption,
     },
   ];
 
@@ -230,7 +230,7 @@ export function AuthDialog(): React.JSX.Element {
   ];
 
   // Map an AuthType to the corresponding main menu option.
-  // QWEN_OAUTH maps directly; USE_OPENAI maps to:
+  // DOCT_OAUTH maps directly; USE_OPENAI maps to:
   // - CODING_PLAN when current config matches coding plan
   // - API_KEY for other OpenAI / Anthropic / Gemini-compatible configs
   const contentGenConfig = config.getContentGeneratorConfig();
@@ -240,7 +240,7 @@ export function AuthDialog(): React.JSX.Element {
       contentGenConfig?.apiKeyEnvKey,
     ) !== false;
   const authTypeToMainOption = (authType: AuthType): MainOption => {
-    if (authType === AuthType.QWEN_OAUTH) return AuthType.QWEN_OAUTH;
+    if (authType === AuthType.DOCT_OAUTH) return AuthType.DOCT_OAUTH;
     if (authType === AuthType.USE_OPENAI && isCurrentlyCodingPlan) {
       return 'CODING_PLAN';
     }
@@ -261,10 +261,10 @@ export function AuthDialog(): React.JSX.Element {
         return item.value === authTypeToMainOption(currentAuthType);
       }
 
-      // Priority 3: DOCT_DEFAULT_AUTH_TYPE/QWEN_DEFAULT_AUTH_TYPE env var
+      // Priority 3: DOCT_DEFAULT_AUTH_TYPE/DOCT_DEFAULT_AUTH_TYPE env var
       const defaultAuthType = parseDefaultAuthType(
         process.env['DOCT_DEFAULT_AUTH_TYPE'] ??
-          process.env['QWEN_DEFAULT_AUTH_TYPE'],
+          process.env['DOCT_DEFAULT_AUTH_TYPE'],
       );
       if (defaultAuthType) {
         return item.value === authTypeToMainOption(defaultAuthType);
@@ -272,7 +272,7 @@ export function AuthDialog(): React.JSX.Element {
 
       // Priority 4: provider-first default to API key flow.
       // This chooses BYO provider/API-key setup as the default onboarding path
-      // instead of the legacy Qwen OAuth-first selection.
+      // instead of the legacy Doct OAuth-first selection.
       return item.value === 'API_KEY';
     }),
   );
@@ -292,7 +292,7 @@ export function AuthDialog(): React.JSX.Element {
       return;
     }
 
-    // For Qwen OAuth, proceed directly
+    // For Doct OAuth, proceed directly
     await onAuthSelect(value);
   };
 
@@ -589,7 +589,7 @@ export function AuthDialog(): React.JSX.Element {
       <Box marginTop={1}>
         <Text color={theme.text.secondary}>
           {t(
-            'You can enter multiple model IDs, separated by commas. Examples: qwen3.5-plus,glm-5,kimi-k2.5',
+            'You can enter multiple model IDs, separated by commas. Examples: doct3.5-plus,glm-5,kimi-k2.5',
           )}
         </Text>
       </Box>
@@ -713,11 +713,11 @@ export function AuthDialog(): React.JSX.Element {
           </Box>
           <Box>
             <Link
-              url="https://qwenlm.github.io/qwen-code-docs/en/users/support/tos-privacy/"
+              url="https://doctlm.github.io/doct-code-docs/en/users/support/tos-privacy/"
               fallback={false}
             >
               <Text color={theme.text.secondary} underline>
-                https://qwenlm.github.io/qwen-code-docs/en/users/support/tos-privacy/
+                https://doctlm.github.io/doct-code-docs/en/users/support/tos-privacy/
               </Text>
             </Link>
           </Box>

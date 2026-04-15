@@ -5,8 +5,8 @@
  */
 
 import * as path from 'node:path';
-import type { Config } from '@qwen-code/qwen-code-core';
-import { Storage } from '@qwen-code/qwen-code-core';
+import type { Config } from '@doct-code/doct-code-core';
+import { Storage } from '@doct-code/doct-code-core';
 import mock from 'mock-fs';
 import { FileCommandLoader } from './FileCommandLoader.js';
 import { assert, vi } from 'vitest';
@@ -57,9 +57,9 @@ vi.mock('./prompt-processors/argumentProcessor.js', async (importOriginal) => {
       .mockImplementation(() => new original.DefaultArgumentProcessor()),
   };
 });
-vi.mock('@qwen-code/qwen-code-core', async (importOriginal) => {
+vi.mock('@doct-code/doct-code-core', async (importOriginal) => {
   const original =
-    await importOriginal<typeof import('@qwen-code/qwen-code-core')>();
+    await importOriginal<typeof import('@doct-code/doct-code-core')>();
   return {
     ...original,
     Storage: original.Storage,
@@ -529,7 +529,7 @@ describe('FileCommandLoader', () => {
       ).getProjectCommandsDir();
       const extensionDir = path.join(
         process.cwd(),
-        '.qwen/extensions/test-ext',
+        '.doct/extensions/test-ext',
       );
 
       mock({
@@ -540,7 +540,7 @@ describe('FileCommandLoader', () => {
           'project.toml': 'prompt = "Project command"',
         },
         [extensionDir]: {
-          'qwen-extension.json': JSON.stringify({
+          'doct-extension.json': JSON.stringify({
             name: 'test-ext',
             version: '1.0.0',
           }),
@@ -582,12 +582,12 @@ describe('FileCommandLoader', () => {
       ).getProjectCommandsDir();
       const extensionDir = path.join(
         process.cwd(),
-        '.qwen/extensions/test-ext',
+        '.doct/extensions/test-ext',
       );
 
       mock({
         [extensionDir]: {
-          'qwen-extension.json': JSON.stringify({
+          'doct-extension.json': JSON.stringify({
             name: 'test-ext',
             version: '1.0.0',
           }),
@@ -678,16 +678,16 @@ describe('FileCommandLoader', () => {
     it('only loads commands from active extensions', async () => {
       const extensionDir1 = path.join(
         process.cwd(),
-        '.qwen/extensions/active-ext',
+        '.doct/extensions/active-ext',
       );
       const extensionDir2 = path.join(
         process.cwd(),
-        '.qwen/extensions/inactive-ext',
+        '.doct/extensions/inactive-ext',
       );
 
       mock({
         [extensionDir1]: {
-          'qwen-extension.json': JSON.stringify({
+          'doct-extension.json': JSON.stringify({
             name: 'active-ext',
             version: '1.0.0',
           }),
@@ -696,7 +696,7 @@ describe('FileCommandLoader', () => {
           },
         },
         [extensionDir2]: {
-          'qwen-extension.json': JSON.stringify({
+          'doct-extension.json': JSON.stringify({
             name: 'inactive-ext',
             version: '1.0.0',
           }),
@@ -737,12 +737,12 @@ describe('FileCommandLoader', () => {
     it('handles missing extension commands directory gracefully', async () => {
       const extensionDir = path.join(
         process.cwd(),
-        '.qwen/extensions/no-commands',
+        '.doct/extensions/no-commands',
       );
 
       mock({
         [extensionDir]: {
-          'qwen-extension.json': JSON.stringify({
+          'doct-extension.json': JSON.stringify({
             name: 'no-commands',
             version: '1.0.0',
           }),
@@ -769,11 +769,11 @@ describe('FileCommandLoader', () => {
     });
 
     it('handles nested command structure in extensions', async () => {
-      const extensionDir = path.join(process.cwd(), '.qwen/extensions/a');
+      const extensionDir = path.join(process.cwd(), '.doct/extensions/a');
 
       mock({
         [extensionDir]: {
-          'qwen-extension.json': JSON.stringify({
+          'doct-extension.json': JSON.stringify({
             name: 'a',
             version: '1.0.0',
           }),

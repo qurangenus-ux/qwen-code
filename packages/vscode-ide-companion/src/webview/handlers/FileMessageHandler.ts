@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,12 +13,12 @@ import {
   ensureLeftGroupOfChatWebview,
 } from '../../utils/editorGroupUtils.js';
 import { ReadonlyFileSystemProvider } from '../../services/readonlyFileSystemProvider.js';
-import { FileDiscoveryService } from '@qwen-code/qwen-code-core/src/services/fileDiscoveryService.js';
+import { FileDiscoveryService } from '@doct-code/doct-code-core/src/services/fileDiscoveryService.js';
 import {
   FileSearchFactory,
   type FileSearch,
-} from '@qwen-code/qwen-code-core/src/utils/filesearch/fileSearch.js';
-import * as crawlCache from '@qwen-code/qwen-code-core/src/utils/filesearch/crawlCache.js';
+} from '@doct-code/doct-code-core/src/utils/filesearch/fileSearch.js';
+import * as crawlCache from '@doct-code/doct-code-core/src/utils/filesearch/crawlCache.js';
 import { getErrorMessage } from '../../utils/errorMessage.js';
 
 /**
@@ -78,7 +78,7 @@ export class FileMessageHandler extends BaseMessageHandler {
         projectRoot: rootPath,
         ignoreDirs: ['.git', 'node_modules'],
         useGitignore: true,
-        useQwenignore: false,
+        useDoctignore: false,
         cache: true,
         cacheTtl: 30000,
         enableRecursiveFileSearch: true,
@@ -374,7 +374,7 @@ export class FileMessageHandler extends BaseMessageHandler {
           if (
             discovery.shouldIgnoreFile(uri.fsPath, {
               respectGitIgnore: true,
-              respectQwenIgnore: false,
+              respectDoctIgnore: false,
             })
           ) {
             return;

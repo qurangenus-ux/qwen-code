@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen
+ * Copyright 2025 Doct
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -21,8 +21,8 @@ import type {
 /**
  * Represents the storage level for a subagent configuration.
  * - 'session': Session-level agents provided at runtime, read-only (highest priority)
- * - 'project': Stored in `.qwen/agents/` within the project directory
- * - 'user': Stored in `~/.qwen/agents/` in the user's home directory
+ * - 'project': Stored in `.doct/agents/` within the project directory
+ * - 'user': Stored in `~/.doct/agents/` in the user's home directory
  * - 'extension': Provided by an installed extension
  * - 'builtin': Built-in agents embedded in the codebase, always available (lowest priority)
  */

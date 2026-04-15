@@ -40,7 +40,7 @@ You can also give it specific instructions:
 
 ## Manual configuration
 
-Add a `statusLine` object under the `ui` key in `~/.qwen/settings.json`:
+Add a `statusLine` object under the `ui` key in `~/.doct/settings.json`:
 
 ```json
 {
@@ -67,7 +67,7 @@ The command receives a JSON object via stdin with the following fields:
   "session_id": "abc-123",
   "version": "0.14.1",
   "model": {
-    "display_name": "qwen-3-235b"
+    "display_name": "doct-3-235b"
   },
   "context_window": {
     "context_window_size": 131072,
@@ -85,7 +85,7 @@ The command receives a JSON object via stdin with the following fields:
   },
   "metrics": {
     "models": {
-      "qwen-3-235b": {
+      "doct-3-235b": {
         "api": {
           "total_requests": 10,
           "total_errors": 0,
@@ -114,7 +114,7 @@ The command receives a JSON object via stdin with the following fields:
 | Field                                 | Type             | Description                                                                        |
 | ------------------------------------- | ---------------- | ---------------------------------------------------------------------------------- |
 | `session_id`                          | string           | Unique session identifier                                                          |
-| `version`                             | string           | Qwen Code version                                                                  |
+| `version`                             | string           | Doct Code version                                                                  |
 | `model.display_name`                  | string           | Current model name                                                                 |
 | `context_window.context_window_size`  | number           | Total context window size in tokens                                                |
 | `context_window.used_percentage`      | number           | Context window usage as percentage (0–100)                                         |
@@ -147,7 +147,7 @@ The command receives a JSON object via stdin with the following fields:
 }
 ```
 
-Output: `qwen-3-235b  ctx:34%`
+Output: `doct-3-235b  ctx:34%`
 
 ### Git branch + directory
 
@@ -183,7 +183,7 @@ Output: `+120/-30 lines`
 
 ### Script file for complex commands
 
-For longer commands, save a script file at `~/.qwen/statusline-command.sh`:
+For longer commands, save a script file at `~/.doct/statusline-command.sh`:
 
 ```bash
 #!/bin/bash
@@ -210,7 +210,7 @@ Then reference it in settings:
   "ui": {
     "statusLine": {
       "type": "command",
-      "command": "bash ~/.qwen/statusline-command.sh"
+      "command": "bash ~/.doct/statusline-command.sh"
     }
   }
 }
@@ -222,7 +222,7 @@ Then reference it in settings:
 - **Timeout**: Commands that take longer than 5 seconds are killed. The status line clears on failure.
 - **Output**: Only the first line of stdout is used. The text is rendered with dimmed colors in the footer's left section and truncated if it exceeds the available width.
 - **Hot reload**: Changes to `ui.statusLine` in settings take effect immediately — no restart required.
-- **Shell**: Commands run via `/bin/sh` on macOS/Linux. On Windows, `cmd.exe` is used by default — wrap POSIX commands with `bash -c "..."` or point to a bash script (e.g. `bash ~/.qwen/statusline-command.sh`).
+- **Shell**: Commands run via `/bin/sh` on macOS/Linux. On Windows, `cmd.exe` is used by default — wrap POSIX commands with `bash -c "..."` or point to a bash script (e.g. `bash ~/.doct/statusline-command.sh`).
 - **Removal**: Delete the `ui.statusLine` key from settings to disable. The "? for shortcuts" hint returns.
 
 ## Troubleshooting

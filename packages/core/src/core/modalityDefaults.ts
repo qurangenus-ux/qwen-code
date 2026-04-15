@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -38,20 +38,20 @@ const MODALITY_PATTERNS: Array<[RegExp, InputModalities]> = [
   [/^claude-/, { image: true, pdf: true }],
 
   // -------------------
-  // Alibaba / Qwen
+  // Alibaba / Doct
   // -------------------
-  // Qwen3.5-Plus, Qwen3.6-Plus: image + video support
-  [/^qwen3\.5-plus/, { image: true, video: true }],
-  [/^qwen3\.6-plus/, { image: true, video: true }],
+  // Doct3.5-Plus, Doct3.6-Plus: image + video support
+  [/^doct3\.5-plus/, { image: true, video: true }],
+  [/^doct3\.6-plus/, { image: true, video: true }],
   [/^coder-model$/, { image: true, video: true }],
 
-  // Qwen VL (vision-language) models: image + video
-  [/^qwen-vl-/, { image: true, video: true }],
-  [/^qwen3-vl-/, { image: true, video: true }],
+  // Doct VL (vision-language) models: image + video
+  [/^doct-vl-/, { image: true, video: true }],
+  [/^doct3-vl-/, { image: true, video: true }],
 
-  // Qwen coder / text models: text-only
-  [/^qwen3-coder-/, {}],
-  [/^qwen/, {}],
+  // Doct coder / text models: text-only
+  [/^doct3-coder-/, {}],
+  [/^doct/, {}],
 
   // -------------------
   // DeepSeek — text-only

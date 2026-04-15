@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -12,7 +12,7 @@ import type { VSCodeAPI } from '../../hooks/useVSCode.js';
  * Manages session list, current session, session switching, and search
  */
 export const useSessionManagement = (vscode: VSCodeAPI) => {
-  const [qwenSessions, setQwenSessions] = useState<
+  const [doctSessions, setDoctSessions] = useState<
     Array<Record<string, unknown>>
   >([]);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
@@ -31,10 +31,10 @@ export const useSessionManagement = (vscode: VSCodeAPI) => {
    */
   const filteredSessions = useMemo(() => {
     if (!sessionSearchQuery.trim()) {
-      return qwenSessions;
+      return doctSessions;
     }
     const query = sessionSearchQuery.toLowerCase();
-    return qwenSessions.filter((session) => {
+    return doctSessions.filter((session) => {
       const title = (
         (session.title as string) ||
         (session.name as string) ||
@@ -42,18 +42,18 @@ export const useSessionManagement = (vscode: VSCodeAPI) => {
       ).toLowerCase();
       return title.includes(query);
     });
-  }, [qwenSessions, sessionSearchQuery]);
+  }, [doctSessions, sessionSearchQuery]);
 
   /**
    * Load session list
    */
-  const handleLoadQwenSessions = useCallback(() => {
+  const handleLoadDoctSessions = useCallback(() => {
     // Reset pagination state and load first page
-    setQwenSessions([]);
+    setDoctSessions([]);
     setNextCursor(undefined);
     setHasMore(true);
     setIsLoading(true);
-    vscode.postMessage({ type: 'getQwenSessions', data: { size: PAGE_SIZE } });
+    vscode.postMessage({ type: 'getDoctSessions', data: { size: PAGE_SIZE } });
     setShowSessionSelector(true);
   }, [vscode]);
 
@@ -63,7 +63,7 @@ export const useSessionManagement = (vscode: VSCodeAPI) => {
     }
     setIsLoading(true);
     vscode.postMessage({
-      type: 'getQwenSessions',
+      type: 'getDoctSessions',
       data: { cursor: nextCursor, size: PAGE_SIZE },
     });
   }, [hasMore, isLoading, nextCursor, vscode]);
@@ -71,7 +71,7 @@ export const useSessionManagement = (vscode: VSCodeAPI) => {
   /**
    * Create new session
    */
-  const handleNewQwenSession = useCallback(
+  const handleNewDoctSession = useCallback(
     (modelId?: string | null) => {
       const trimmedModelId =
         typeof modelId === 'string' && modelId.trim().length > 0
@@ -99,7 +99,7 @@ export const useSessionManagement = (vscode: VSCodeAPI) => {
 
       console.log('[useSessionManagement] Switching to session:', sessionId);
       vscode.postMessage({
-        type: 'switchQwenSession',
+        type: 'switchDoctSession',
         data: { sessionId },
       });
     },
@@ -108,7 +108,7 @@ export const useSessionManagement = (vscode: VSCodeAPI) => {
 
   return {
     // State
-    qwenSessions,
+    doctSessions,
     currentSessionId,
     currentSessionTitle,
     showSessionSelector,
@@ -119,7 +119,7 @@ export const useSessionManagement = (vscode: VSCodeAPI) => {
     isLoading,
 
     // State setters
-    setQwenSessions,
+    setDoctSessions,
     setCurrentSessionId,
     setCurrentSessionTitle,
     setShowSessionSelector,
@@ -129,8 +129,8 @@ export const useSessionManagement = (vscode: VSCodeAPI) => {
     setIsLoading,
 
     // Operations
-    handleLoadQwenSessions,
-    handleNewQwenSession,
+    handleLoadDoctSessions,
+    handleNewDoctSession,
     handleSwitchSession,
     handleLoadMoreSessions,
   };

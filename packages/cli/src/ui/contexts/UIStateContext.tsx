@@ -17,7 +17,7 @@ import type {
   SettingInputRequest,
   PluginChoiceRequest,
 } from '../types.js';
-import type { QwenAuthState } from '../hooks/useQwenAuth.js';
+import type { DoctAuthState } from '../hooks/useDoctAuth.js';
 import type { CommandContext, SlashCommand } from '../commands/types.js';
 import type { TextBuffer } from '../components/shared/text-buffer.js';
 import type {
@@ -25,7 +25,7 @@ import type {
   IdeContext,
   ApprovalMode,
   IdeInfo,
-} from '@qwen-code/qwen-code-core';
+} from '@doct-code/doct-code-core';
 import type { DOMElement } from 'ink';
 import type { SessionStatsState } from '../contexts/SessionContext.js';
 import type { ExtensionUpdateState } from '../state/extensions.js';
@@ -46,8 +46,8 @@ export interface UIState {
   authError: string | null;
   isAuthDialogOpen: boolean;
   pendingAuthType: AuthType | undefined;
-  // Qwen OAuth state
-  qwenAuthState: QwenAuthState;
+  // Doct OAuth state
+  doctAuthState: DoctAuthState;
   editorError: string | null;
   isEditorDialogOpen: boolean;
   debugMessage: string;

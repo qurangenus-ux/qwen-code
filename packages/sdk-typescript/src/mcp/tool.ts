@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -30,7 +30,7 @@ export type SdkMcpToolDefinition<Schema extends ZodRawShape = ZodRawShape> = {
  * @example
  * ```typescript
  * import { z } from 'zod';
- * import { tool } from '@qwen-code/sdk';
+ * import { tool } from '@doct-code/sdk';
  *
  * const calculatorTool = tool(
  *   'calculate_sum',

@@ -8,7 +8,7 @@
  * Contextual tip registry — defines tips, their conditions, and display rules.
  */
 
-import { DEFAULT_TOKEN_LIMIT } from '@qwen-code/qwen-code-core';
+import { DEFAULT_TOKEN_LIMIT } from '@doct-code/doct-code-core';
 
 export type TipTrigger = 'startup' | 'post-response';
 
@@ -79,8 +79,8 @@ export const tipRegistry: ContextualTip[] = [
     priority: 70,
   },
   {
-    id: 'new-user-qwenmd',
-    content: 'Add a QWEN.md file to give Qwen Code persistent project context.',
+    id: 'new-user-doctmd',
+    content: 'Add a DOCT.md file to give Doct Code persistent project context.',
     trigger: 'startup',
     isRelevant: (ctx) => ctx.sessionCount < 10,
     cooldownPrompts: 0,
@@ -89,7 +89,7 @@ export const tipRegistry: ContextualTip[] = [
   {
     id: 'new-user-resume',
     content:
-      'You can resume a previous conversation by running qwen --continue or qwen --resume.',
+      'You can resume a previous conversation by running doct --continue or doct --resume.',
     trigger: 'startup',
     isRelevant: (ctx) => ctx.sessionCount < 10,
     cooldownPrompts: 0,
@@ -98,7 +98,7 @@ export const tipRegistry: ContextualTip[] = [
   {
     id: 'shell-commands',
     content:
-      'You can run any shell commands from Qwen Code using ! (e.g. !ls).',
+      'You can run any shell commands from Doct Code using ! (e.g. !ls).',
     trigger: 'startup',
     isRelevant: (ctx) => ctx.sessionCount < 15,
     cooldownPrompts: 0,

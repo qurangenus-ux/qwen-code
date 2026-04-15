@@ -53,7 +53,7 @@ import {
   IDLE_SPECULATION,
   ApprovalMode,
   type PermissionMode,
-} from '@qwen-code/qwen-code-core';
+} from '@doct-code/doct-code-core';
 import { buildResumedHistoryItems } from './utils/resumeHistoryUtils.js';
 import { validateAuthMethod } from '../config/auth.js';
 import { loadHierarchicalGeminiMemory } from '../config/config.js';
@@ -467,7 +467,7 @@ export const AppContainer = (props: AppContainerProps) => {
     isAuthDialogOpen,
     isAuthenticating,
     pendingAuthType,
-    qwenAuthState,
+    doctAuthState,
     handleAuthSelect,
     handleCodingPlanSubmit,
     handleAlibabaStandardSubmit,
@@ -663,7 +663,7 @@ export const AppContainer = (props: AppContainerProps) => {
     historyManager.addItem(
       {
         type: MessageType.INFO,
-        text: 'Refreshing hierarchical memory (QWEN.md or other context files)...',
+        text: 'Refreshing hierarchical memory (DOCT.md or other context files)...',
       },
       Date.now(),
     );
@@ -1143,7 +1143,7 @@ export const AppContainer = (props: AppContainerProps) => {
 
   // Resolve fastModel, validating it belongs to the current authType.
   // If the configured fastModel is from a different provider, the API call
-  // would fail silently (DashScope/Qwen client rejects unknown model IDs),
+  // would fail silently (DashScope/Doct client rejects unknown model IDs),
   // so fall back to the main model instead.
   const resolveFastModel = useCallback((): string | undefined => {
     const fastModel = settings.merged.fastModel;
@@ -1784,7 +1784,7 @@ export const AppContainer = (props: AppContainerProps) => {
 
   useKeypress(handleGlobalKeypress, { isActive: true });
 
-  // Update terminal title with Qwen Code status and thoughts
+  // Update terminal title with Doct Code status and thoughts
   useEffect(() => {
     // Respect both showStatusInTitle and hideWindowTitle settings
     if (
@@ -1811,7 +1811,7 @@ export const AppContainer = (props: AppContainerProps) => {
       lastTitleRef.current = paddedTitle;
       stdout.write(`\x1b]2;${paddedTitle}\x07`);
     }
-    // Note: We don't need to reset the window title on exit because Qwen Code is already doing that elsewhere
+    // Note: We don't need to reset the window title on exit because Doct Code is already doing that elsewhere
   }, [
     streamingState,
     thought,
@@ -1878,8 +1878,8 @@ export const AppContainer = (props: AppContainerProps) => {
       authError,
       isAuthDialogOpen,
       pendingAuthType,
-      // Qwen OAuth state
-      qwenAuthState,
+      // Doct OAuth state
+      doctAuthState,
       editorError,
       isEditorDialogOpen,
       debugMessage,
@@ -1984,8 +1984,8 @@ export const AppContainer = (props: AppContainerProps) => {
       authError,
       isAuthDialogOpen,
       pendingAuthType,
-      // Qwen OAuth state
-      qwenAuthState,
+      // Doct OAuth state
+      doctAuthState,
       editorError,
       isEditorDialogOpen,
       debugMessage,

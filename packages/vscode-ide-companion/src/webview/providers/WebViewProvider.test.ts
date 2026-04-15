@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Qwen Team
+ * Copyright 2025 Doct Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -22,7 +22,7 @@ const {
   mockOnDidChangeTextEditorSelection: vi.fn(() => ({ dispose: vi.fn() })),
 }));
 
-vi.mock('@qwen-code/qwen-code-core', () => ({
+vi.mock('@doct-code/doct-code-core', () => ({
   Storage: {
     getGlobalTempDir: mockGetGlobalTempDir,
   },
@@ -48,8 +48,8 @@ vi.mock('vscode', () => ({
   },
 }));
 
-vi.mock('../../services/qwenAgentManager.js', () => ({
-  QwenAgentManager: class {
+vi.mock('../../services/doctAgentManager.js', () => ({
+  DoctAgentManager: class {
     isConnected = false;
     currentSessionId = null;
     connect = vi.fn();
@@ -196,7 +196,7 @@ describe('WebViewProvider.attachToView', () => {
         onDidChangeVisibility: vi.fn(() => ({ dispose: vi.fn() })),
         onDidDispose: vi.fn(() => ({ dispose: vi.fn() })),
       } as never,
-      'qwen-code.chatView.sidebar',
+      'doct-code.chatView.sidebar',
     );
 
     const roots = (
@@ -280,7 +280,7 @@ describe('WebViewProvider.attachToView', () => {
         onDidChangeVisibility: vi.fn(() => ({ dispose: vi.fn() })),
         onDidDispose: vi.fn(() => ({ dispose: vi.fn() })),
       } as never,
-      'qwen-code.chatView.sidebar',
+      'doct-code.chatView.sidebar',
     );
 
     await messageHandler?.({

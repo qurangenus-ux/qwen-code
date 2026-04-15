@@ -1,10 +1,10 @@
 /**
  * @license
- * Copyright 2025 Qwen
+ * Copyright 2025 Doct
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import type { ChatRecord, AgentResultDisplay } from '@qwen-code/qwen-code-core';
+import type { ChatRecord, AgentResultDisplay } from '@doct-code/doct-code-core';
 import type {
   Content,
   GenerateContentResponseUsageMetadata,
