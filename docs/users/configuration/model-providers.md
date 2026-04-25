@@ -14,6 +14,97 @@ Use `modelProviders` to declare curated model lists per auth type that the `/mod
 >
 > **Duplicate model IDs within the same authType:** Defining multiple models with the same `id` under a single `authType` (e.g., two entries with `"id": "gpt-4o"` in `openai`) is currently not supported. If duplicates exist, **the first occurrence wins** and subsequent duplicates are skipped with a warning. Note that the `id` field is used both as the configuration identifier and as the actual model name sent to the API, so using unique IDs (e.g., `gpt-4o-creative`, `gpt-4o-balanced`) is not a viable workaround. This is a known limitation that we plan to address in a future release.
 
+## 🚀 Future Roadmap: Android CLI 2026 AI
+
+> [!important]
+> **Coming in 2026**: Native Android CLI support with built-in AI skills!
+
+Qwen Code is expanding to mobile platforms with full Android CLI support planned for 2026. This will include:
+
+### Android CLI 2026 Features
+
+- **Native Android Terminal Integration**: Run Qwen Code directly on Android devices via Termux or native Android terminal
+- **Built-in AI Skills**: Pre-configured skills optimized for mobile development
+  - 📱 Android Development Assistant
+  - 🎨 UI/UX Design Helper
+  - 🔋 Battery Optimization Advisor
+  - 📡 Network Debugging Tool
+  - 🧪 Mobile Testing Assistant
+- **On-Device Inference**: Support for running local models on Android NPUs
+- **Cross-Platform Sync**: Seamless synchronization between desktop and mobile configurations
+- **Touch-Optimized UI**: Mobile-first interface for the `/model` and `/skill` commands
+
+### Planned Android-Specific Providers
+
+```json
+{
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "qwen-mobile-optimized",
+        "name": "Qwen Mobile Optimized",
+        "envKey": "DASHSCOPE_API_KEY",
+        "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "capabilities": {
+          "mobileOptimized": true,
+          "lowLatency": true,
+          "offlineSupport": false
+        },
+        "generationConfig": {
+          "timeout": 30000,
+          "maxRetries": 2,
+          "samplingParams": {
+            "temperature": 0.3,
+            "max_tokens": 2048
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+> [!note]
+> Android CLI 2026 will ship with all major providers pre-configured and ready to use out of the box. No manual configuration required!
+
+## Built-in Skills
+
+Qwen Code comes with a comprehensive set of built-in skills that enhance your development workflow. Skills are located in `/workspace/packages/core/src/skills/bundled/` and can be extended via extensions.
+
+### Core Bundled Skills
+
+| Skill Name | Description | Location |
+|------------|-------------|----------|
+| `review` | Code review assistant with intelligent suggestions | `/packages/core/src/skills/bundled/review/` |
+| `loop` | Iterative refinement and loop optimization | `/packages/core/src/skills/bundled/loop/` |
+| `qc-helper` | Quality control and code quality helper | `/packages/core/src/skills/bundled/qc-helper/` |
+
+### Skill Configuration
+
+Skills can be configured in your `settings.json`:
+
+```json
+{
+  "skills": {
+    "enabled": ["review", "loop", "qc-helper"],
+    "customSkills": []
+  }
+}
+```
+
+### Using Skills
+
+Activate skills via the `/skill` command:
+
+```bash
+/skill review
+/skill loop
+/skill qc-helper
+```
+
+> [!tip]
+> Visit `/workspace/packages/cli/src/commands/extensions/examples/skills/` for examples on creating custom skills.
+
 ## Configuration Examples by Auth Type
 
 Below are comprehensive configuration examples for different authentication types, showing the available parameters and their combinations.
@@ -32,6 +123,30 @@ The `modelProviders` object keys must be valid `authType` values. Currently supp
 > [!warning]
 > If an invalid auth type key is used (e.g., a typo like `"openai-custom"`), the configuration will be **silently skipped** and the models will not appear in the `/model` picker. Always use one of the supported auth type values listed above.
 
+### Popular OpenAI-Compatible Providers
+
+The `openai` auth type supports a wide range of providers. Below is a comprehensive list of popular providers you can configure:
+
+| Provider        | Base URL                                              | Environment Variable   | Description                              |
+| --------------- | ----------------------------------------------------- | ---------------------- | ---------------------------------------- |
+| OpenAI          | `https://api.openai.com/v1`                           | `OPENAI_API_KEY`       | Official OpenAI API                      |
+| DashScope       | `https://dashscope.aliyuncs.com/compatible-mode/v1`   | `DASHSCOPE_API_KEY`    | Alibaba Cloud DashScope (Qwen models)    |
+| DeepSeek        | `https://api.deepseek.com/v1`                         | `DEEPSEEK_API_KEY`     | DeepSeek AI models                       |
+| OpenRouter      | `https://openrouter.ai/api/v1`                        | `OPENROUTER_API_KEY`   | Aggregated model provider                |
+| ModelScope      | `https://api-inference.modelscope.cn/v1`              | `MODELSCOPE_API_KEY`   | Alibaba ModelScope platform              |
+| Groq            | `https://api.groq.com/openai/v1`                      | `GROQ_API_KEY`         | Fast inference with LPU                  |
+| Fireworks AI    | `https://api.fireworks.ai/inference/v1`               | `FIREWORKS_API_KEY`    | High-performance inference               |
+| Together AI     | `https://api.together.xyz/v1`                         | `TOGETHER_API_KEY`     | Open-source model hosting                |
+| Mistral         | `https://api.mistral.ai/v1`                           | `MISTRAL_API_KEY`      | Mistral AI models                        |
+| Perplexity      | `https://api.perplexity.ai`                           | `PERPLEXITY_API_KEY`   | Search-enhanced AI models                |
+| Anyscale        | `https://api.endpoints.anyscale.com/v1`               | `ANYSCALE_API_KEY`     | Scalable model endpoints                 |
+| Local (Ollama)  | `http://localhost:11434/v1`                           | `OLLAMA_API_KEY`       | Local model serving                      |
+| Local (vLLM)    | `http://localhost:8000/v1`                            | `VLLM_API_KEY`         | Local high-throughput serving            |
+| Local (LM Studio)| `http://localhost:1234/v1`                           | `LMSTUDIO_API_KEY`     | Local desktop model serving              |
+
+> [!tip]
+> You can copy and paste any of the provider configurations below and customize them for your needs. Simply replace the API key placeholder with your actual key or environment variable name.
+
 ### SDKs Used for API Requests
 
 Qwen Code uses the following official SDKs to send requests to each provider:
@@ -49,11 +164,869 @@ This means the `baseUrl` you configure should be compatible with the correspondi
 
 This auth type supports not only OpenAI's official API but also any OpenAI-compatible endpoint, including aggregated model providers like OpenRouter.
 
+#### Quick Copy-Paste Configurations
+
+Below are ready-to-use configurations for popular providers. Simply copy the one you need and add it to your `settings.json`.
+
+<details>
+<summary><strong>OpenAI (Official)</strong></summary>
+
+```json
+{
+  "env": {
+    "OPENAI_API_KEY": "sk-your-actual-openai-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "gpt-4o",
+        "name": "GPT-4o",
+        "envKey": "OPENAI_API_KEY",
+        "baseUrl": "https://api.openai.com/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.2,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>DashScope (Qwen Models)</strong></summary>
+
+```json
+{
+  "env": {
+    "DASHSCOPE_API_KEY": "sk-your-dashscope-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "qwen-plus",
+        "name": "Qwen Plus",
+        "envKey": "DASHSCOPE_API_KEY",
+        "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "generationConfig": {
+          "timeout": 120000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 8192
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>DeepSeek</strong></summary>
+
+```json
+{
+  "env": {
+    "DEEPSEEK_API_KEY": "your-deepseek-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "deepseek-chat",
+        "name": "DeepSeek Chat",
+        "envKey": "DEEPSEEK_API_KEY",
+        "baseUrl": "https://api.deepseek.com/v1",
+        "generationConfig": {
+          "timeout": 120000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.6,
+            "max_tokens": 8192
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>OpenRouter (Multi-Provider Aggregator)</strong></summary>
+
+```json
+{
+  "env": {
+    "OPENROUTER_API_KEY": "sk-or-your-openrouter-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "anthropic/claude-3.5-sonnet",
+        "name": "Claude 3.5 Sonnet (via OpenRouter)",
+        "envKey": "OPENROUTER_API_KEY",
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "generationConfig": {
+          "timeout": 120000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.5,
+            "max_tokens": 8192
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>Groq (Fast Inference)</strong></summary>
+
+```json
+{
+  "env": {
+    "GROQ_API_KEY": "your-groq-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "llama-3.1-70b-versatile",
+        "name": "Llama 3.1 70B (Groq)",
+        "envKey": "GROQ_API_KEY",
+        "baseUrl": "https://api.groq.com/openai/v1",
+        "generationConfig": {
+          "timeout": 30000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>Fireworks AI</strong></summary>
+
+```json
+{
+  "env": {
+    "FIREWORKS_API_KEY": "your-fireworks-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "accounts/fireworks/models/llama-v3p1-70b-instruct",
+        "name": "Llama 3.1 70B (Fireworks)",
+        "envKey": "FIREWORKS_API_KEY",
+        "baseUrl": "https://api.fireworks.ai/inference/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>Together AI</strong></summary>
+
+```json
+{
+  "env": {
+    "TOGETHER_API_KEY": "your-together-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "meta-llama/Llama-3.1-70B-Instruct-Turbo",
+        "name": "Llama 3.1 70B (Together)",
+        "envKey": "TOGETHER_API_KEY",
+        "baseUrl": "https://api.together.xyz/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>Mistral AI</strong></summary>
+
+```json
+{
+  "env": {
+    "MISTRAL_API_KEY": "your-mistral-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "mistral-large-latest",
+        "name": "Mistral Large",
+        "envKey": "MISTRAL_API_KEY",
+        "baseUrl": "https://api.mistral.ai/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 8192
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>Perplexity AI</strong></summary>
+
+```json
+{
+  "env": {
+    "PERPLEXITY_API_KEY": "your-perplexity-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "sonar-pro",
+        "name": "Sonar Pro (Perplexity)",
+        "envKey": "PERPLEXITY_API_KEY",
+        "baseUrl": "https://api.perplexity.ai",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.2,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>Anyscale Endpoints</strong></summary>
+
+```json
+{
+  "env": {
+    "ANYSCALE_API_KEY": "your-anyscale-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "meta-llama/Llama-3.1-70B-Instruct",
+        "name": "Llama 3.1 70B (Anyscale)",
+        "envKey": "ANYSCALE_API_KEY",
+        "baseUrl": "https://api.endpoints.anyscale.com/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>ModelScope</strong></summary>
+
+```json
+{
+  "env": {
+    "MODELSCOPE_API_KEY": "your-modelscope-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "qwen-max",
+        "name": "Qwen Max (ModelScope)",
+        "envKey": "MODELSCOPE_API_KEY",
+        "baseUrl": "https://api-inference.modelscope.cn/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 8192
+          }
+        }
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary><strong>SiliconCloud (硅基流动)</strong></summary>
+
+```json
+{
+  "env": {
+    "SILICONCLOUD_API_KEY": "your-siliconcloud-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "Qwen/Qwen2.5-72B-Instruct",
+        "name": "Qwen2.5 72B Instruct (SiliconCloud)",
+        "envKey": "SILICONCLOUD_API_KEY",
+        "baseUrl": "https://api.siliconflow.cn/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      },
+      {
+        "id": "Pro/Qwen/Qwen2.5-72B-Instruct",
+        "name": "Qwen2.5 72B Pro (SiliconCloud)",
+        "envKey": "SILICONCLOUD_API_KEY",
+        "baseUrl": "https://api.siliconflow.cn/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Volcengine (火山引擎)</strong></summary>
+
+```json
+{
+  "env": {
+    "VOLCENGINE_API_KEY": "your-volcengine-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "doubao-pro-4k",
+        "name": "Doubao Pro 4K (Volcengine)",
+        "envKey": "VOLCENGINE_API_KEY",
+        "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      },
+      {
+        "id": "doubao-lite-32k",
+        "name": "Doubao Lite 32K (Volcengine)",
+        "envKey": "VOLCENGINE_API_KEY",
+        "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 8192
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Baidu Qianfan (千帆)</strong></summary>
+
+```json
+{
+  "env": {
+    "QIANFAN_API_KEY": "your-qianfan-api-key-here",
+    "QIANFAN_SECRET_KEY": "your-qianfan-secret-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "ernie-bot-4",
+        "name": "ERNIE Bot 4.0 (Qianfan)",
+        "envKey": "QIANFAN_API_KEY",
+        "baseUrl": "https://qianfan.baidubce.com/v2",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Tencent Hunyuan (腾讯混元)</strong></summary>
+
+```json
+{
+  "env": {
+    "HUNYUAN_API_KEY": "your-hunyuan-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "hunyuan-pro",
+        "name": "Hunyuan Pro (Tencent)",
+        "envKey": "HUNYUAN_API_KEY",
+        "baseUrl": "https://hunyuan.tencentcloudapi.com",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Zhipu AI (智谱 AI)</strong></summary>
+
+```json
+{
+  "env": {
+    "ZHIPU_API_KEY": "your-zhipu-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "glm-4",
+        "name": "GLM-4 (Zhipu)",
+        "envKey": "ZHIPU_API_KEY",
+        "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      },
+      {
+        "id": "glm-4-flash",
+        "name": "GLM-4 Flash (Zhipu)",
+        "envKey": "ZHIPU_API_KEY",
+        "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Moonshot AI (月之暗面)</strong></summary>
+
+```json
+{
+  "env": {
+    "MOONSHOT_API_KEY": "your-moonshot-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "moonshot-v1-8k",
+        "name": "Moonshot v1 8K",
+        "envKey": "MOONSHOT_API_KEY",
+        "baseUrl": "https://api.moonshot.cn/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      },
+      {
+        "id": "moonshot-v1-32k",
+        "name": "Moonshot v1 32K",
+        "envKey": "MOONSHOT_API_KEY",
+        "baseUrl": "https://api.moonshot.cn/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 8192
+          }
+        }
+      },
+      {
+        "id": "moonshot-v1-128k",
+        "name": "Moonshot v1 128K",
+        "envKey": "MOONSHOT_API_KEY",
+        "baseUrl": "https://api.moonshot.cn/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 16384
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>MiniMax</strong></summary>
+
+```json
+{
+  "env": {
+    "MINIMAX_API_KEY": "your-minimax-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "abab6.5-chat",
+        "name": "MiniMax abab6.5 Chat",
+        "envKey": "MINIMAX_API_KEY",
+        "baseUrl": "https://api.minimax.chat/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>StepFun (阶跃星辰)</strong></summary>
+
+```json
+{
+  "env": {
+    "STEPFUN_API_KEY": "your-stepfun-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "step-1-8k",
+        "name": "Step-1 8K",
+        "envKey": "STEPFUN_API_KEY",
+        "baseUrl": "https://api.stepfun.com/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Lingyiwanwu (零一万物)</strong></summary>
+
+```json
+{
+  "env": {
+    "LINGYIWANWU_API_KEY": "your-lingyiwanwu-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "yi-large",
+        "name": "Yi-Large",
+        "envKey": "LINGYIWANWU_API_KEY",
+        "baseUrl": "https://api.lingyiwanwu.com/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      },
+      {
+        "id": "yi-medium",
+        "name": "Yi-Medium",
+        "envKey": "LINGYIWANWU_API_KEY",
+        "baseUrl": "https://api.lingyiwanwu.com/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Azure OpenAI</strong></summary>
+
+```json
+{
+  "env": {
+    "AZURE_OPENAI_API_KEY": "your-azure-openai-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "gpt-4o",
+        "name": "GPT-4o (Azure)",
+        "envKey": "AZURE_OPENAI_API_KEY",
+        "baseUrl": "https://YOUR_RESOURCE.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.2,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Cohere</strong></summary>
+
+```json
+{
+  "env": {
+    "COHERE_API_KEY": "your-cohere-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "command-r-plus",
+        "name": "Command R+ (Cohere)",
+        "envKey": "COHERE_API_KEY",
+        "baseUrl": "https://api.cohere.ai/compatibility/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Replicate</strong></summary>
+
+```json
+{
+  "env": {
+    "REPLICATE_API_KEY": "your-replicate-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "meta/meta-llama-3-70b-instruct",
+        "name": "Llama 3 70B (Replicate)",
+        "envKey": "REPLICATE_API_KEY",
+        "baseUrl": "https://api.replicate.com/v1/openai",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>NVIDIA NIM</strong></summary>
+
+```json
+{
+  "env": {
+    "NVIDIA_API_KEY": "your-nvidia-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "meta/llama3-70b-instruct",
+        "name": "Llama 3 70B (NVIDIA NIM)",
+        "envKey": "NVIDIA_API_KEY",
+        "baseUrl": "https://integrate.api.nvidia.com/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Hugging Face Inference Endpoints</strong></summary>
+
+```json
+{
+  "env": {
+    "HUGGINGFACE_API_KEY": "your-huggingface-api-key-here"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "your-model-id",
+        "name": "Custom Model (HF Endpoints)",
+        "envKey": "HUGGINGFACE_API_KEY",
+        "baseUrl": "https://YOUR_ENDPOINT_ID.us-east-1.aws.endpoints.huggingface.cloud/v1",
+        "generationConfig": {
+          "timeout": 60000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+#### Full Example with Multiple Providers
+
 ```json
 {
   "env": {
     "OPENAI_API_KEY": "sk-your-actual-openai-key-here",
-    "OPENROUTER_API_KEY": "sk-or-your-actual-openrouter-key-here"
+    "DASHSCOPE_API_KEY": "sk-your-dashscope-key-here",
+    "DEEPSEEK_API_KEY": "your-deepseek-api-key-here",
+    "OPENROUTER_API_KEY": "sk-or-your-openrouter-key-here",
+    "GROQ_API_KEY": "your-groq-api-key-here"
   },
   "modelProviders": {
     "openai": [
@@ -87,28 +1060,44 @@ This auth type supports not only OpenAI's official API but also any OpenAI-compa
         }
       },
       {
-        "id": "gpt-4o-mini",
-        "name": "GPT-4o Mini",
-        "envKey": "OPENAI_API_KEY",
-        "baseUrl": "https://api.openai.com/v1",
-        "generationConfig": {
-          "timeout": 30000,
-          "samplingParams": {
-            "temperature": 0.5,
-            "max_tokens": 2048
-          }
-        }
-      },
-      {
-        "id": "openai/gpt-4o",
-        "name": "GPT-4o (via OpenRouter)",
-        "envKey": "OPENROUTER_API_KEY",
-        "baseUrl": "https://openrouter.ai/api/v1",
+        "id": "qwen-plus",
+        "name": "Qwen Plus",
+        "envKey": "DASHSCOPE_API_KEY",
+        "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
         "generationConfig": {
           "timeout": 120000,
           "maxRetries": 3,
           "samplingParams": {
-            "temperature": 0.7
+            "temperature": 0.7,
+            "max_tokens": 8192
+          }
+        }
+      },
+      {
+        "id": "deepseek-chat",
+        "name": "DeepSeek Chat",
+        "envKey": "DEEPSEEK_API_KEY",
+        "baseUrl": "https://api.deepseek.com/v1",
+        "generationConfig": {
+          "timeout": 120000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.6,
+            "max_tokens": 8192
+          }
+        }
+      },
+      {
+        "id": "llama-3.1-70b-groq",
+        "name": "Llama 3.1 70B (Groq)",
+        "envKey": "GROQ_API_KEY",
+        "baseUrl": "https://api.groq.com/openai/v1",
+        "generationConfig": {
+          "timeout": 30000,
+          "maxRetries": 3,
+          "samplingParams": {
+            "temperature": 0.7,
+            "max_tokens": 4096
           }
         }
       }
@@ -290,6 +1279,46 @@ export VLLM_API_KEY="not-needed"
 >   ```
 >
 > Each provider example includes an `env` field to illustrate how the API key should be configured.
+
+## Complete Provider Reference Table
+
+Below is a comprehensive table of all supported providers with their configuration details:
+
+| Provider | Auth Type | Base URL | Environment Variable | Region | Copy-Paste Ready |
+|----------|-----------|----------|---------------------|--------|------------------|
+| **OpenAI** | `openai` | `https://api.openai.com/v1` | `OPENAI_API_KEY` | Global | ✅ |
+| **DashScope (Qwen)** | `openai` | `https://dashscope.aliyuncs.com/compatible-mode/v1` | `DASHSCOPE_API_KEY` | China/Global | ✅ |
+| **DeepSeek** | `openai` | `https://api.deepseek.com/v1` | `DEEPSEEK_API_KEY` | China/Global | ✅ |
+| **OpenRouter** | `openai` | `https://openrouter.ai/api/v1` | `OPENROUTER_API_KEY` | Global | ✅ |
+| **ModelScope** | `openai` | `https://api-inference.modelscope.cn/v1` | `MODELSCOPE_API_KEY` | China | ✅ |
+| **Groq** | `openai` | `https://api.groq.com/openai/v1` | `GROQ_API_KEY` | Global | ✅ |
+| **Fireworks AI** | `openai` | `https://api.fireworks.ai/inference/v1` | `FIREWORKS_API_KEY` | Global | ✅ |
+| **Together AI** | `openai` | `https://api.together.xyz/v1` | `TOGETHER_API_KEY` | Global | ✅ |
+| **Mistral AI** | `openai` | `https://api.mistral.ai/v1` | `MISTRAL_API_KEY` | EU | ✅ |
+| **Perplexity** | `openai` | `https://api.perplexity.ai` | `PERPLEXITY_API_KEY` | Global | ✅ |
+| **Anyscale** | `openai` | `https://api.endpoints.anyscale.com/v1` | `ANYSCALE_API_KEY` | Global | ✅ |
+| **SiliconCloud** | `openai` | `https://api.siliconflow.cn/v1` | `SILICONCLOUD_API_KEY` | China | ✅ |
+| **Volcengine** | `openai` | `https://ark.cn-beijing.volces.com/api/v3` | `VOLCENGINE_API_KEY` | China | ✅ |
+| **Baidu Qianfan** | `openai` | `https://qianfan.baidubce.com/v2` | `QIANFAN_API_KEY` | China | ✅ |
+| **Tencent Hunyuan** | `openai` | `https://hunyuan.tencentcloudapi.com` | `HUNYUAN_API_KEY` | China | ✅ |
+| **Zhipu AI** | `openai` | `https://open.bigmodel.cn/api/paas/v4` | `ZHIPU_API_KEY` | China | ✅ |
+| **Moonshot AI** | `openai` | `https://api.moonshot.cn/v1` | `MOONSHOT_API_KEY` | China | ✅ |
+| **MiniMax** | `openai` | `https://api.minimax.chat/v1` | `MINIMAX_API_KEY` | China | ✅ |
+| **StepFun** | `openai` | `https://api.stepfun.com/v1` | `STEPFUN_API_KEY` | China | ✅ |
+| **Lingyiwanwu** | `openai` | `https://api.lingyiwanwu.com/v1` | `LINGYIWANWU_API_KEY` | China | ✅ |
+| **Azure OpenAI** | `openai` | `https://YOUR_RESOURCE.openai.azure.com` | `AZURE_OPENAI_API_KEY` | Global | ✅ |
+| **Cohere** | `openai` | `https://api.cohere.ai/compatibility/v1` | `COHERE_API_KEY` | Global | ✅ |
+| **Replicate** | `openai` | `https://api.replicate.com/v1/openai` | `REPLICATE_API_KEY` | Global | ✅ |
+| **NVIDIA NIM** | `openai` | `https://integrate.api.nvidia.com/v1` | `NVIDIA_API_KEY` | Global | ✅ |
+| **Hugging Face** | `openai` | `https://YOUR_ENDPOINT.endpoints.huggingface.cloud/v1` | `HUGGINGFACE_API_KEY` | Global | ✅ |
+| **Ollama (Local)** | `openai` | `http://localhost:11434/v1` | `OLLAMA_API_KEY` | Local | ✅ |
+| **vLLM (Local)** | `openai` | `http://localhost:8000/v1` | `VLLM_API_KEY` | Local | ✅ |
+| **LM Studio (Local)** | `openai` | `http://localhost:1234/v1` | `LMSTUDIO_API_KEY` | Local | ✅ |
+| **Anthropic** | `anthropic` | `https://api.anthropic.com` | `ANTHROPIC_API_KEY` | Global | ✅ |
+| **Google Gemini** | `gemini` | `https://generativelanguage.googleapis.com` | `GEMINI_API_KEY` | Global | ✅ |
+
+> [!tip]
+> All configurations above are **copy-paste ready**! Simply click on any provider's `<details>` section above, copy the JSON configuration, and paste it into your `settings.json`. Replace the placeholder API key with your actual key or environment variable.
 
 ## Alibaba Cloud Coding Plan
 
